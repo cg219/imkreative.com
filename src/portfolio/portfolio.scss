@@ -1,0 +1,15 @@
+@import "~normalize.css";
+@import "variables";
+
+html, 
+body,
+p,
+a,
+strong {
+  font-family: "Open Sans", sans-serif;
+}
+
+body {
+  position: relative;
+  background: $bluegreen;
+}
