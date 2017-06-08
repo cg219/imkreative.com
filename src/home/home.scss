@@ -1,0 +1,26 @@
+@import "~normalize.css";
+@import "vars";
+
+html, 
+body,
+p,
+a,
+strong {
+  font-family: "Open Sans", sans-serif;
+  color: $black;
+}
+
+a {
+  text-decoration: none;
+  color: $maincolor;
+  font-weight: 600;
+}
+
+body, html {
+  height: 100%;
+  background: $white;
+}
+
+body {
+  border-top: 10px solid $black;
+}

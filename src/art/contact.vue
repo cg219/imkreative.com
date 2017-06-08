@@ -1,0 +1,39 @@
+<template>
+  <app>
+    <div class="contact-page">
+      <p>For inquiries about purchasing original pieces and limited prints, or for information about shows, exhibitions, commissions, interviews and more, please contact me by filling out the form below.</p>
+      
+      <div class="contact-page__form">
+        <form action="">
+          <div class="contact-page__input"><input type="text" placeholder="Name (Required)" required /></div>
+          <div class="contact-page__input"><input type="email" placeholder="Email (Required)" required /></div>
+          <div class="contact-page__input"><textarea placeholder="Message (Required)" required></textarea></div>
+          <button type="submit">Send</button>
+        </form>
+      </div>
+    </div>
+  </app>
+</template>
+
+<script>
+  const App = require('./app.vue');
+
+  module.exports = {
+    components: {
+      App
+    }
+  }
+</script>
+
+<style lang="scss">
+  @import 'vars';
+
+  .contact-page {
+    margin: 100px auto 0;
+    width: 50%;
+
+    &__input {
+      @extend %input;
+    }
+  }
+</style>

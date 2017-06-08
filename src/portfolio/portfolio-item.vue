@@ -38,7 +38,24 @@
 </script>
 
 <style lang="scss">
-  @import "variables";
+  @import "vars";
+
+    .fade-transition {
+      -webkit-transition: all .5s;
+         -moz-transition: all .5s;
+          -ms-transition: all .5s;
+           -o-transition: all .5s;
+              transition: all .5s;
+      position: relative;
+      opacity: 1;
+      top: 0px;
+    }
+
+    .fade-enter,
+    .fade-leave {
+      opacity: 0;
+      top: -10px;
+    }
 
   .item{
     float: left;
@@ -68,38 +85,6 @@
 
     @media #{$lg-desktop} {
       width: 20%;
-    }
-
-    &.ng-move,
-    &.ng-enter,
-    &.ng-leave{
-      -webkit-transition: all .5s;
-         -moz-transition: all .5s;
-        -ms-transition: all .5s;
-         -o-transition: all .5s;
-          transition: all .5s;
-      position: relative;
-    }
-
-    &.ng-enter-stagger{
-      transition-delay: 0.1s;
-      transition-duration: 0s;
-      -webkit-transition-delay: 0.1s;
-      -webkit-transition-duration: 0s;
-    }
-
-    &.ng-leave,
-    &.ng-move.ng-move-active,
-    &.ng-enter.ng-enter-active{
-      opacity: 1;
-      top: 0px;
-    }
-
-    &.ng-enter,
-    &.ng-move,
-    &.ng-leave.ng-leave-active{
-      opacity: 0;
-      top: -10px;
     }
 
     img{
@@ -207,7 +192,7 @@
       bottom: 10px;
       right: 10px;
       font-size: 10px;
-      color: $bluegreen;
+      color: $maincolor;
 
       &.offline{
         color: red;

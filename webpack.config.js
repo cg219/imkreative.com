@@ -1,9 +1,13 @@
 const path = require('path');
 const ExtractText = require('extract-text-webpack-plugin');
+const GlobalStyle = new ExtractText('./../css/[name].global.styles.css');
+const PageStyle = new ExtractText('./../css/[name].styles.css');
 
 module.exports = {
   entry: {
-    portfolio: './src/portfolio/index.js'
+    portfolio: './src/portfolio/index.js',
+    home: './src/home/index.js',
+    art: './src/art/index.js'
   },
   output: {
     filename: '[name].bundle.js',
@@ -13,7 +17,7 @@ module.exports = {
     rules: [
       {
         test: /\.scss$/,
-        loader: ExtractText.extract({
+        loader: GlobalStyle.extract({
           use: 'css-loader!sass-loader',
           fallback: 'style-loader?importLoaders=1'
         })
@@ -23,7 +27,7 @@ module.exports = {
         loader: 'vue-loader',
         options: {
           loaders: {
-            scss: ExtractText.extract({
+            scss: PageStyle.extract({
               use: 'css-loader!sass-loader',
               fallback: 'vue-style-loader'
             })
@@ -37,11 +41,16 @@ module.exports = {
         options: {
           presets: ['es2015']
         }
+      },
+      {
+        test: /\.(png|jpg)$/,
+        loader: 'url-loader'
       }
     ]
   },
   plugins: [
-    new ExtractText('./../css/styles.css')
+    GlobalStyle,
+    PageStyle
   ],
   externals: {
     async: 'commonjs async'

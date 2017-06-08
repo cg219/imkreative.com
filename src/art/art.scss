@@ -1,0 +1,68 @@
+@import "~normalize.css";
+@import "vars";
+
+html, 
+body,
+p,
+a,
+strong {
+  font-family: "Open Sans", sans-serif;
+  color: $black;
+}
+
+.container {
+  box-sizing: border-box;
+  padding: 10px 50px 20px;
+}
+
+h2 {
+  font-family: "Goudy Bookletter 1911", serif;
+  color: $black;
+  letter-spacing: 1px;
+  font-size: 30px;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-transition: color 0.5s;
+     -moz-transition: color 0.5s;
+      -ms-transition: color 0.5s;
+       -o-transition: color 0.5s;
+          transition: color 0.5s;
+}
+
+input, textarea {
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  color: rgba($black, .7);
+  background: none;
+
+  &::placeholder {
+    color: rgba($black, .4);
+    font-size: 0.8em;
+  }
+}
+
+button {
+  border: none;
+  outline: none;
+  background-color: $black;
+  color: $white;
+  padding: 10px 20px;
+  text-transform: uppercase;
+  cursor: pointer;
+  -webkit-transition: background-color .5s;
+     -moz-transition: background-color .5s;
+      -ms-transition: background-color .5s;
+       -o-transition: background-color .5s;
+          transition: background-color .5s;
+
+  &:hover {
+    background-color: $maincolor;
+  }
+}

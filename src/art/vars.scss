@@ -1,0 +1,11 @@
+@import "../global/vars";
+
+%input {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px rgba($black, .4) solid;
+  margin-bottom: 10px;
+  overflow: hidden;
+  padding: 10px;
+  background-color: rgba($black, .02);
+}

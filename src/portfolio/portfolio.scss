@@ -1,5 +1,5 @@
 @import "~normalize.css";
-@import "variables";
+@import "vars";
 
 html, 
 body,
@@ -11,5 +11,5 @@ strong {
 
 body {
   position: relative;
-  background: $bluegreen;
+  background: $white;
 }
