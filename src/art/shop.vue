@@ -6,7 +6,8 @@
         :title="product.title"
         :image="product.selectedVariantImage.variants[6].src"
         :price="product.selectedVariant.price"
-        :productID="product.id">
+        :productID="product.id"
+        :available="product.attrs.available">
       </shop-item>
     </div>
   </app>
@@ -33,6 +34,7 @@
     },
     methods: {
       updateProducts(fetchedProducts) {
+        console.log(fetchedProducts)
         this.products = fetchedProducts;
       }
     }

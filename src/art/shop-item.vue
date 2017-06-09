@@ -1,6 +1,6 @@
 <template>
   <div class="shop-item">
-    <div class="shop-item__image-container" :style="styleObject">
+    <div class="shop-item__image-container" :class="{'sold-out': !available}" :style="styleObject">
       <span>{{title}}</span>
       <a :href="`/art/shop/product/${productID}`"></a>
     </div>
@@ -15,7 +15,7 @@
   const App = require('./app.vue');
 
   module.exports = {
-    props: ['title', 'price', 'image', 'productID'],
+    props: ['title', 'price', 'image', 'productID', 'available'],
     components: {
       App
     },
@@ -59,6 +59,21 @@
         display: block;
         width: 100%;
         height: 100%;
+      }
+
+      &.sold-out {
+        position: relative;
+
+        &::after {
+          content: 'Sold Out';
+          position: absolute;
+          top: 0;
+          right: 0;
+          background-color: $black;
+          color: $white;
+          display: block;
+          padding: 5px;
+        }
       }
     }
     

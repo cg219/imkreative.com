@@ -8,7 +8,8 @@ const routes = {
   '/art/shows' : 'show.vue',
   '/art/gallery' : 'gallery.vue',
   '/art/shop' : 'shop.vue',
-  '/art/shop/product/:id' : 'product.vue'
+  '/art/shop/product/:id' : 'product.vue',
+  '/art/shop/cart' : 'cart.vue'
 }
 
 const app = new Vue({

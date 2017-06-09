@@ -1,7 +1,7 @@
 <template>
   <app>
     <div class="product-page">
-      <div class="product-page__image-container">
+      <div class="product-page__image-container" :class="{'sold-out': !isAvailable}">
         <img :src="productImage" alt="productTitle">
       </div>
       <div class="product-page__product-info">
@@ -12,10 +12,10 @@
             <div class="product-page__qty-container">
               <label for="productQuantity">Qty.</label>
               <div class="product-page__input">
-                <input name="productQuantity" type="number" min="1" placeholder="1">
+                <input name="productQuantity" type="number" min="1" v-model.number="quantity">
               </div>
             </div>
-            <button class="product-page__add-to-cart">Add to Cart</button>
+            <button class="product-page__add-to-cart" @click="addToCart">Add to Cart</button>
           </form>
         </div>
         <p class="product-page__product-desc">{{productDesc}}</p>
@@ -24,6 +24,12 @@
           Please allow 7-10 days for item(s) to be shipped. Each item is hand packaged and printed for the best possible quality.
         </p>
       </div>
+    </div>
+    <div class="added-to-cart-notification" :class="{'show': addedNotificationShowing}">
+      <a href="/art/shop/cart"><p>{{addedAmount}} {{addedProductTitle}} added to your cart.</p></a>
+    </div>
+    <div class="sold-out-notification" :class="{'show': soldOutNotificationShowing}">
+      <p>This item is sould out. Sorry =/</p>
     </div>
   </app>
 </template>
@@ -42,7 +48,14 @@
         productTitle: this.title,
         productPrice: this.price,
         productDesc: this.description,
-        productImage: this.image
+        productImage: this.image,
+        quantity: 1,
+        selectedVariant: {},
+        addedAmount: 0,
+        addedProductTitle: '',
+        addedNotificationShowing: false,
+        soldOutNotificationShowing: false,
+        isAvailable: true
       }
     },
     computed: {
@@ -64,11 +77,48 @@
     },
     methods: {
       updateProduct(product) {
-        console.log(product)
         this.productTitle = product.title;
         this.productPrice = product.selectedVariant.price;
         this.productDesc = product.description;
         this.productImage = product.selectedVariantImage.variants[8].src;
+        this.selectedVariant = product.selectedVariant;
+        this.isAvailable = product.attrs.available;
+      },
+      addToCart(event) {
+        event.preventDefault();
+        
+        Ting.$once('CART_FETCHED', cart => {
+
+          let variant = {
+            variant: this.selectedVariant,
+            quantity: this.quantity
+          }
+
+          if(this.isAvailable) {
+            cart.createLineItemsFromVariants(variant)
+              .then(updatedCart => {
+                this.addedAmount = variant.quantity;
+                this.addedProductTitle = variant.variant.productTitle;
+                this.showAddedNotification();
+
+                Ting.$emit('UPDATE_CART', updatedCart);
+              })
+          }
+          else{
+            this.showSoldOutNotification();
+          }
+        })
+        Ting.$emit('FETCH_CART');
+      },
+      showAddedNotification() {
+        this.addedNotificationShowing = true;
+
+        setTimeout(() => this.addedNotificationShowing = false, 3000);
+      },
+      showSoldOutNotification() {
+        this.soldOutNotificationShowing = true;
+
+        setTimeout(() => this.soldOutNotificationShowing = false, 3000);
       }
     }
   }
@@ -76,6 +126,20 @@
 
 <style lang="scss">
   @import 'vars';
+
+  .added-to-cart-notification, .sold-out-notification {
+    @extend %notification;
+
+    bottom: 30px;
+    right: 30px;
+    cursor: pointer;
+
+    a {
+      display: block;
+      height: 100%;
+      width: 100%;
+    }
+  }
 
   .product-page {
     display: flex;
@@ -89,11 +153,26 @@
 
       img {
         width: 100%;
-        border: 2px solid rgba($black, .7);
+        border: 1px solid rgba($black, .5);
       }
 
       span {
         display: none;
+      }
+
+      &.sold-out {
+        position: relative;
+
+        &::after {
+          content: 'Sold Out';
+          position: absolute;
+          top: 0;
+          right: 0;
+          background-color: $black;
+          color: $white;
+          display: block;
+          padding: 5px;
+        }
       }
     }
 

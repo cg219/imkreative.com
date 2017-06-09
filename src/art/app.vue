@@ -37,7 +37,7 @@
           },
           {
             url: "/art/contact",
-            title: "Contact me"
+            title: "Contact"
           }
         ],
 
@@ -69,8 +69,32 @@
     &__nav {
       display: flex;
 
+      .cart-icon {
+        background-image: url('cart2.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+        width: 40px;
+        height: 40px;
+
+        p {
+          margin: 0;
+          padding: 5px 0 0;
+          width: 100%;
+          line-height: 40px;
+          text-align: center;
+          color: $maincolor;
+          font-size: 14px;
+          font-weight: 600;
+
+          &.empty {
+            color: rgba($black, .7);
+          }
+        }
+      }
+
       ul {
         display: flex;
+        align-items: flex-end;
         padding: 0;
         margin: 0;
         list-style-type: none;
