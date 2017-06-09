@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <header class="header">
-      <h1>Mente Gee: <small>art by mente</small></h1>
+      <h1>Mente Gee</h1>
       <art-nav :data="navData" class="header__nav"></art-nav>
     </header>
 
@@ -10,11 +10,19 @@
     <footer>
       
     </footer>
+    <div class="mobile-cart">
+      <a href="/art/shop/cart">
+        <div class="cart-icon">
+          <p :class="{empty: itemCount == 0}">{{itemCount}}</p>
+        </div>
+      </a>
+    </div>
   </div>
 </template>
 
 <script>
   const ArtNav = require('./nav.vue');
+  const Ting = require('./ting');
 
   module.exports = {
     components: {
@@ -40,8 +48,18 @@
             title: "Contact"
           }
         ],
-
+        itemCount: 0
       }
+    },
+    methods: {
+      updateCart(cart) {
+        this.itemCount = cart.lineItemCount;
+      },
+    },
+    created() {
+      Ting.$once('CART_FETCHED', this.updateCart);
+      Ting.$on('UPDATE_CART', this.updateCart);
+      Ting.$emit('FETCH_CART');
     }
   }
 </script>
@@ -64,59 +82,48 @@
         font-weight: 600;
         color: $maincolor;
       }
+
+      @media #{$mobile} {
+        font-size: 20px;
+      }
     }
 
     &__nav {
-      display: flex;
 
-      .cart-icon {
-        background-image: url('cart2.png');
-        background-repeat: no-repeat;
-        background-size: contain;
-        width: 40px;
-        height: 40px;
+    }
+  }
 
-        p {
-          margin: 0;
-          padding: 5px 0 0;
-          width: 100%;
-          line-height: 40px;
-          text-align: center;
-          color: $maincolor;
-          font-size: 14px;
-          font-weight: 600;
+  .mobile-cart {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 100px;
+    width: 100%;
+    background-color: $black;
+    z-index: 9;
 
-          &.empty {
-            color: rgba($black, .7);
-          }
-        }
-      }
+    @media #{$notmobile} {
+      display: none;
+    }
 
-      ul {
-        display: flex;
-        align-items: flex-end;
-        padding: 0;
-        margin: 0;
-        list-style-type: none;
-      }
+    a {
+      width: 100%;
+      height: 100%;
+    }
 
-      li {
-        margin-right: 20px;
+    .cart-icon {
+      background-image: url('cart.png');
+      height: 70px;
+      width: 70px;
+      margin: 15px auto;
 
-        &:last-child {
-          margin-right: 0;
-        }
+      p {
+        line-height: 70px;
+        color: $white;
+        font-size: 24px;
 
-        &:hover a {
-          color: $maincolor;
-        }
-
-        &.active {
-          color: $secondarycolor;
-
-          &:hover a {
-            color: $secondarycolor;
-          }
+        &.empty {
+          color: $white;
         }
       }
     }

@@ -410,9 +410,18 @@ strong {
   font-family: "Open Sans", sans-serif;
   color: #121212; }
 
+body {
+  background-color: #FAFAFA; }
+  @media (min-width: 481px) and (max-width: 768px), (max-width: 480px) {
+    body {
+      margin-bottom: 100px; } }
+
 .container {
   box-sizing: border-box;
   padding: 10px 50px 20px; }
+  @media (min-width: 481px) and (max-width: 768px), (max-width: 480px) {
+    .container {
+      padding: 10px 15px 20px; } }
 
 h2 {
   font-family: "Goudy Bookletter 1911", serif;
@@ -446,7 +455,7 @@ button {
   border: none;
   outline: none;
   background-color: #121212;
-  color: #EFEFEF;
+  color: #FAFAFA;
   padding: 10px 20px;
   text-transform: uppercase;
   cursor: pointer;

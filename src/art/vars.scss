@@ -1,5 +1,7 @@
 @import "../global/vars";
 
+$white: #FAFAFA;
+
 %input {
   width: 100%;
   box-sizing: border-box;
@@ -43,5 +45,18 @@
   
   &.show {
     opacity: 1;
+  }
+}
+
+%page {
+  margin: 100px auto 50px;
+  width: 100%;
+
+  @media #{$mobile} {
+    margin-top: 50px;
+  }
+
+  @media #{$sm-mobile} {
+    margin-top: 20px;
   }
 }

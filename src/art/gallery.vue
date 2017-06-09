@@ -39,8 +39,8 @@
   @import 'vars';
 
   .gallery-page {
-    margin: 100px auto;
-    width: 95%;
+    @extend %page;
+    
     display: flex;
     justify-content: flex-start; 
     flex-wrap: wrap;
@@ -57,15 +57,31 @@
       }
 
       &:nth-child(3n-1) {
-        margin: 0 .5%;
+        @media #{$notmobile} {
+          margin-left: .5%;
+          margin-right: .5%;
+        }
 
         @media #{$mobile} {
-          margin: 0;
+          margin-left: 0%;
+          margin-right: 0%;
+        }
+      }
+
+      &:nth-child(2n-1) {
+
+        @media #{$mobile} {
+          margin-left: 1%;
+          margin-right: 1%;
         }
       }
 
       @media #{$mobile} {
-        width: 49%;
+        width: 48%;
+      }
+
+      @media #{$sm-mobile} {
+        width: 100%;
       }
     }
   }

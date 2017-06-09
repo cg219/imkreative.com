@@ -100,7 +100,9 @@
   @import 'vars';
 
   .cart {
-    margin: 100px auto 50px;
+    @extend %page;
+
+    width: 100%;
 
     a {
       color: $maincolor;
@@ -123,6 +125,10 @@
       p {
         font-size: 14px;
         font-weight: 400;
+
+        @media #{$sm-mobile} {
+          font-size: 12px;
+        }
       }
     }
 
@@ -135,15 +141,23 @@
 
     &__column-item {
       width: 100px;
+
+      @media #{$sm-mobile} {
+        width: 50px;
+      }
     }
 
     &__column-qty {
-      width: 50px;
+      width: 40px;
     }
 
     &__column-title {
       width: 40%;
       padding: 0 20px;
+
+      @media #{$sm-mobile} {
+        width: 30%;
+      }
     }
 
     &__column-price {
@@ -156,15 +170,23 @@
 
     &__item-image {
       width: 100px;
+
+      @media #{$sm-mobile} {
+        width: 50px;
+      }
     }
 
     &__item-title {
       width: 40%;
       padding: 0 20px;
+
+      @media #{$sm-mobile} {
+        width: 30%;
+      }
     }
 
     &__item-price {
-      width: 10%
+      width: 10%;
     }
   
     &__qty-input {
@@ -172,6 +194,7 @@
 
       width: 40px;
       flex: 0 0 auto;
+      padding: 5px;
 
       input {
         font-size: 12px;

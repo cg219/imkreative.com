@@ -24433,6 +24433,10 @@ module.exports = Component.exports
 /* 153 */
 /***/ (function(module, exports, __webpack_require__) {
 
+
+/* styles */
+__webpack_require__(243)
+
 var Component = __webpack_require__(2)(
   /* script */
   __webpack_require__(166),
@@ -24504,6 +24508,10 @@ module.exports = Component.exports
 /***/ }),
 /* 155 */
 /***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(251)
 
 var Component = __webpack_require__(2)(
   /* script */
@@ -25207,8 +25215,16 @@ module.exports = {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 const ArtNav = __webpack_require__(153);
+const Ting = __webpack_require__(8);
 
 module.exports = {
   components: {
@@ -25228,9 +25244,19 @@ module.exports = {
       }, {
         url: "/art/contact",
         title: "Contact"
-      }]
-
+      }],
+      itemCount: 0
     };
+  },
+  methods: {
+    updateCart(cart) {
+      this.itemCount = cart.lineItemCount;
+    }
+  },
+  created() {
+    Ting.$once('CART_FETCHED', this.updateCart);
+    Ting.$on('UPDATE_CART', this.updateCart);
+    Ting.$emit('FETCH_CART');
   }
 };
 
@@ -25351,6 +25377,15 @@ module.exports = {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 const Ting = __webpack_require__(8);
 
@@ -25359,7 +25394,8 @@ module.exports = {
   data() {
     return {
       activePath: window.location.pathname,
-      itemCount: 0
+      itemCount: 0,
+      menuOpen: false
     };
   },
   methods: {
@@ -25368,6 +25404,12 @@ module.exports = {
     },
     updateCart(cart) {
       this.itemCount = cart.lineItemCount;
+    },
+    closeMenu() {
+      this.menuOpen = false;
+    },
+    openMenu() {
+      this.menuOpen = true;
     }
   },
   created() {
@@ -25610,7 +25652,8 @@ module.exports = {
   },
   computed: {
     getShowText() {
-      return `${this.title} @ ${this.venue} in ${this.location}, ${moment(this.date).format('MMMM YYYY')}`;
+      const date = this.isUpcoming ? moment(this.date).format('MMM D, YYYY') : moment(this.date).format('MMMM YYYY');
+      return `${this.title} @ ${this.venue} in ${this.location}, ${date}`;
     }
   }
 };
@@ -25619,6 +25662,16 @@ module.exports = {
 /* 171 */
 /***/ (function(module, exports, __webpack_require__) {
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -31412,7 +31465,22 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('nav', [_c('ul', [_vm._l((_vm.data), function(link) {
+  return _c('nav', [_c('div', {
+    staticClass: "mobile-nav"
+  }, [_c('button', {
+    on: {
+      "click": _vm.openMenu
+    }
+  }, [_vm._v("☰")]), _vm._v(" "), _c('div', {
+    staticClass: "slide-menu",
+    class: {
+      open: _vm.menuOpen
+    }
+  }, [_c('button', {
+    on: {
+      "click": _vm.closeMenu
+    }
+  }, [_vm._v("×")]), _vm._v(" "), _c('ul', _vm._l((_vm.data), function(link) {
     return _c('li', {
       class: {
         active: _vm.isActive(link.url)
@@ -31422,7 +31490,21 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "href": link.url
       }
     }, [_vm._v(_vm._s(link.title))])])
-  }), _vm._v(" "), _c('li', [_c('a', {
+  }))])]), _vm._v(" "), _c('ul', {
+    staticClass: "desktop-nav"
+  }, [_vm._l((_vm.data), function(link) {
+    return _c('li', {
+      class: {
+        active: _vm.isActive(link.url)
+      }
+    }, [_c('a', {
+      attrs: {
+        "href": link.url
+      }
+    }, [_vm._v(_vm._s(link.title))])])
+  }), _vm._v(" "), _c('li', {
+    staticClass: "cart-nav-item"
+  }, [_c('a', {
     attrs: {
       "href": "/art/shop/cart"
     }
@@ -31451,15 +31533,25 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "container"
   }, [_c('header', {
     staticClass: "header"
-  }, [_vm._m(0), _vm._v(" "), _c('art-nav', {
+  }, [_c('h1', [_vm._v("Mente Gee")]), _vm._v(" "), _c('art-nav', {
     staticClass: "header__nav",
     attrs: {
       "data": _vm.navData
     }
-  })], 1), _vm._v(" "), _vm._t("default"), _vm._v(" "), _c('footer')], 2)
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('h1', [_vm._v("Mente Gee: "), _c('small', [_vm._v("art by mente")])])
-}]}
+  })], 1), _vm._v(" "), _vm._t("default"), _vm._v(" "), _c('footer'), _vm._v(" "), _c('div', {
+    staticClass: "mobile-cart"
+  }, [_c('a', {
+    attrs: {
+      "href": "/art/shop/cart"
+    }
+  }, [_c('div', {
+    staticClass: "cart-icon"
+  }, [_c('p', {
+    class: {
+      empty: _vm.itemCount == 0
+    }
+  }, [_vm._v(_vm._s(_vm.itemCount))])])])])], 2)
+},staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
@@ -31596,7 +31688,18 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('app', [_c('h2', [_vm._v("Upcoming Shows")]), _vm._v(" "), _c('show-item', {
+  return _c('app', [_c('div', {
+    staticClass: "show-page"
+  }, [_c('h2', [_vm._v("Upcoming Shows")]), _vm._v(" "), _c('show-item', {
+    attrs: {
+      "title": 'The New Renaissance Day Party',
+      "date": new Date(2017, 5, 25),
+      "type": 'Group',
+      "venue": 'Fantasy in Color Gallery',
+      "location": 'New York',
+      "link": 'https://www.eventbrite.com/e/fantasy-in-color-presents-the-new-renaissance-day-party-tickets-34937338520?aff=utm_source%3Deb_email%26utm_medium%3Demail%26utm_campaign%3Dnew_event_email&utm_term=eventurl_text'
+    }
+  }), _vm._v(" "), _c('show-item', {
     attrs: {
       "title": 'Pancakes and Booze Art Show NYC',
       "date": new Date(2017, 9, 11),
@@ -31632,7 +31735,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "location": 'New York',
       "link": 'http://www.pancakesandbooze.com'
     }
-  })], 1)
+  })], 1)])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -31802,10 +31905,15 @@ module.exports = function(module) {
 /* 242 */
 /***/ (function(module, exports) {
 
-module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAQAAAAAYLlVAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADdcAAA3XAUIom3gAAAAHdElNRQfhBggXMzpwNra/AAABkUlEQVRo3u3ZP2tUQRSG8d9mVyUpQhSJsEVA4r8mVoJgZZHWQlTEQmzSCYEgWFjqlwh2wdpK0CaGxEKwTmcwVWStBJcocTUcC1eMmLC74d69zXlPec+c9zkzwx2YIVWxaoceOe6MpqZdmzZt2R0e9EnzlnXEnuhYdduR8s1HPfLlH+u98ckTo4MVHGwJLnluCrS99NpHLQ2nTZtxvWu97qb35XR/xzchfDXv6H9fj1vwQQhtt8qwv9ud5rfOHpgzZqmbdaNo+yt2hO8eGumROWdHaDtXpP24lhAW+sqeE8K6seIAHgvhTc/u/+ipEO4XZX/KtrBtuu8Rx7zSMVsUwIND9FNTL8qeNeGzRnEFB9MJP4VnZZXvva3Oq2O5OoAm2KoaoFUWQEPd5X3+7H81Ay6aLMG94x0rBx6uw4iVmihrcvtdAli1VIH3PVchhMVKml8Uot/jpTQlQAIkQAIkQAIkQAIkQAIkQAIkQAIkQAL8vqKZcKEC7wmo/JJqxEal/hs1U64N471vX/3wotL2U/ALnZirVWc8wQgAAAAldEVYdGRhdGU6Y3JlYXRlADIwMTctMDYtMDhUMjM6NTE6NTgrMDI6MDDiWBJEAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE3LTA2LTA4VDIzOjUxOjU4KzAyOjAwkwWq+AAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAAASUVORK5CYII="
+module.exports = "data:image/png;base64,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"
 
 /***/ }),
-/* 243 */,
+/* 243 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
 /* 244 */,
 /* 245 */
 /***/ (function(module, exports) {
@@ -32028,6 +32136,13 @@ if (false) {
 
 /***/ }),
 /* 249 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 250 */,
+/* 251 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

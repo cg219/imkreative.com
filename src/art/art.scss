@@ -10,9 +10,21 @@ strong {
   color: $black;
 }
 
+body {
+  background-color: $white;
+
+  @media #{$mobile, $sm-mobile} {
+    margin-bottom: 100px;
+  }
+}
+
 .container {
   box-sizing: border-box;
   padding: 10px 50px 20px;
+
+  @media #{$mobile, $sm-mobile} {
+    padding: 10px 15px 20px;
+  }
 }
 
 h2 {

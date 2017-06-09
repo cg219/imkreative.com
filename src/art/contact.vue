@@ -29,8 +29,17 @@
   @import 'vars';
 
   .contact-page {
-    margin: 100px auto 0;
+    @extend %page;
+    
     width: 50%;
+
+    @media #{$sm-desktop} {
+      width: 80%;
+    }
+
+    @media #{$mobile, $sm-mobile} {
+      width: 100%;
+    }
 
     &__input {
       @extend %input;
