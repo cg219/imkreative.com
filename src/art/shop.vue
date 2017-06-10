@@ -1,14 +1,18 @@
 <template>
   <app>
     <div class="shop-page">
-      <shop-item
-        v-for="product in products"
-        :title="product.title"
-        :image="product.selectedVariantImage.variants[6].src"
-        :price="product.selectedVariant.price"
-        :productID="product.id"
-        :available="product.attrs.available">
-      </shop-item>
+      <h1>Art Shop</h1>
+
+      <div class="shop-page__item-container">
+        <shop-item
+          v-for="product in products"
+          :title="product.title"
+          :image="product.selectedVariantImage.variants[6].src"
+          :price="product.selectedVariant.price"
+          :productID="product.id"
+          :available="product.attrs.available">
+        </shop-item>
+      </div>
     </div>
   </app>
 </template>
@@ -47,9 +51,11 @@
   .shop-page {
     @extend %page;
     
-    display: flex;
-    justify-content: flex-start; 
-    flex-wrap: wrap;
+    &__item-container {
+      display: flex;
+      justify-content: flex-start; 
+      flex-wrap: wrap;
+    }
 
     .shop-item {
       width: 33%;

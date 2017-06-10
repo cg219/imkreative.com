@@ -2,6 +2,25 @@
 
 $white: #FAFAFA;
 
+%icon {
+  width: 20px;
+  height: 20px;
+  background-size: contain;
+  background-repeat: no-repeat;
+
+  @media #{$mobile, $sm-mobile} {
+    width: 30px;
+    height: 30px;
+  }
+
+  a {
+    width: 100%;
+    height: 100%;
+    display: block;
+    text-indent: -99999px;
+  }
+}
+
 %input {
   width: 100%;
   box-sizing: border-box;
@@ -49,11 +68,11 @@ $white: #FAFAFA;
 }
 
 %page {
-  margin: 100px auto 50px;
+  margin: 50px auto 50px;
   width: 100%;
 
   @media #{$mobile} {
-    margin-top: 50px;
+    margin-top: 30px;
   }
 
   @media #{$sm-mobile} {

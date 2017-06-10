@@ -61,10 +61,9 @@
     }
 
     &__desc {
-      font-size: 12px;
-      font-family: "Goudy Bookletter 1911", serif;
+      font-size: 10px;
       color: rgba($black, .7);
-      letter-spacing: 1px;
+      letter-spacing: .5px;
     }
 
   }

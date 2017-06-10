@@ -1,6 +1,7 @@
 <template>
   <app>
-    <div class="show-page">
+    <div class="event-page">
+      <h1>Events</h1>
       <h2>Upcoming Shows</h2>
       <show-item
         :title="'The New Renaissance Day Party'"
@@ -62,12 +63,13 @@
 <style lang="scss">
   @import 'vars';
 
-  .show-page {
+  .event-page {
     @extend %page;
     
     h2 {
       margin-top: 30px;
       margin-bottom: 30px;
+      font-weight: 800;
     }
   }
 </style>

@@ -1,6 +1,7 @@
 <template>
   <app>
     <div class="contact-page">
+      <h1>Contact Me</h1>
       <p>For inquiries about purchasing original pieces and limited prints, or for information about shows, exhibitions, commissions, interviews and more, please contact me by filling out the form below.</p>
       
       <div class="contact-page__form">

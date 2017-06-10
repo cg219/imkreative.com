@@ -1,14 +1,20 @@
 <template>
   <div class="container">
-    <header class="header">
-      <h1>Mente Gee</h1>
-      <art-nav :data="navData" class="header__nav"></art-nav>
-    </header>
-
-    <slot></slot>
-
+    <div class="wrapper">
+      <header class="header">
+        <h1>Mente Gee</h1>
+        <art-nav :data="navData" class="header__nav"></art-nav>
+      </header>
+      <slot></slot>
+    </div>
     <footer>
-      
+      <ul>
+        <li class="instagram"><a href="http://www.instagram.com/kreativemente" target="_blank">Instagram</a></li>
+        <li class="facebook"><a href="http://www.facebook.com/artbymente" target="_blank">Facebook</a></li>
+        <li class="twitter"><a href="http://www.twitter.com/kreativemente" target="_blank">Twitter</a></li>
+        <li class="youtube"><a href="http://www.youtube.com/channel/UCrs5X_h4srCGAOWWN-QKNMA" target="_blank">Youtube</a></li>
+      </ul>
+      <p>Created by Clemente Gomez</p>
     </footer>
     <div class="mobile-cart">
       <a href="/art/shop/cart">
@@ -66,6 +72,54 @@
 
 <style lang="scss">
   @import "vars";
+
+  footer {
+    height: 100px;
+    width: 100%;
+    background-color: darken($white, 10%);
+    position: relative;
+
+    ul {
+      list-style-type: none;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    p {
+      font-size: 8px;
+      position: absolute;
+      bottom: 5px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .instagram, .facebook, .twitter, .youtube {
+      @extend %icon;
+      margin-right: 10px;
+    }
+
+    .instagram {
+      background-image: url('ig.png');
+    }
+
+    .facebook {
+      background-image: url('fb.png');
+    }
+
+    .twitter {
+      background-image: url('twitter.png');
+    }
+
+    .youtube {
+      background-image: url('youtube.png');
+      margin-right: 0;
+    }
+  }
   
   .header {
     display: flex;
@@ -74,8 +128,9 @@
 
     h1 {
       font-size: 30px;
-      font-weight: 400;
+      font-weight: 800;
       color: $black;
+      text-transform: uppercase;
 
       small {
         font-size: 0.8em;
@@ -83,7 +138,7 @@
         color: $maincolor;
       }
 
-      @media #{$mobile} {
+      @media #{$sm-mobile} {
         font-size: 20px;
       }
     }

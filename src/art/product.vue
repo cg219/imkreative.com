@@ -1,11 +1,12 @@
 <template>
   <app>
     <div class="product-page">
+      <h2 class="product-page__product-name mobile">{{productTitle}}</h2>
       <div class="product-page__image-container" :class="{'sold-out': !isAvailable}">
         <img :src="productImage" alt="productTitle">
       </div>
       <div class="product-page__product-info">
-        <h2 class="product-page__product-name">{{productTitle}}</h2>
+        <h2 class="product-page__product-name notmobile">{{productTitle}}</h2>
         <p class="product-page__product-price">${{productPrice}}</p>
         <div class="product-page__cart-container">
           <form action="">
@@ -142,14 +143,22 @@
   }
 
   .product-page {
+    @extend %page;
+
     display: flex;
-    width: 95%;
-    margin: 100px auto 0;
     flex-direction: row;
+
+    @media #{$mobile, $sm-mobile} {
+      flex-direction: column;
+    }
 
     &__image-container {
       width: 50%;
       height: auto;
+
+      @media #{$mobile, $sm-mobile} {
+        width: 100%;
+      }
 
       img {
         width: 100%;
@@ -180,6 +189,11 @@
       padding: 10px 30px;
       width: 50%;
       box-sizing: border-box;
+
+      @media #{$mobile, $sm-mobile} {
+        width: 100%;
+        padding: 10px;
+      }
     }
 
     &__product-name {
@@ -187,6 +201,21 @@
       font-weight: 400;
       font-size: 48px;
       margin-bottom: 5px;
+
+      &.mobile {
+        display: none;
+        
+        @media #{$mobile, $sm-mobile} {
+          display: block;
+          margin-bottom: 25px;
+        }
+      }
+
+      &.notmobile {
+        @media #{$mobile, $sm-mobile} {
+          display: none;
+        }
+      }
     }
 
     &__product-price {

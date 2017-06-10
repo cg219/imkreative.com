@@ -142,7 +142,7 @@
 
     li {
       margin-right: 20px;
-      font-size: 20px;
+      font-size: 18px;
 
       @media #{$mobile} {
         font-size: 14px;
