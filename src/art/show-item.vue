@@ -12,10 +12,10 @@
   const moment = require('moment');
 
   module.exports = {
-    props: ['type', 'title', 'venue', 'location', 'date', 'link'],
+    props: ['type', 'title', 'venue', 'location', 'date', 'link', 'showUpcoming'],
     data() {
       return {
-        isUpcoming: Date.now() < this.date
+        isUpcoming: this.showUpcoming
       }
     },
     computed: {

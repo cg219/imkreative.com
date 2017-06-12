@@ -410,15 +410,23 @@ strong {
   font-family: "Open Sans", sans-serif;
   color: #121212; }
 
+html {
+  min-height: 100%; }
+
 body {
-  background-color: #FAFAFA; }
+  background-color: #FAFAFA;
+  min-height: 100%; }
   @media (min-width: 481px) and (max-width: 768px), (max-width: 480px) {
     body {
       margin-bottom: 100px; } }
 
 .container {
   box-sizing: border-box;
-  padding-top: 10px; }
+  padding-top: 10px;
+  min-height: calc(100vh - 100px); }
+  @media (min-width: 481px) and (max-width: 768px), (max-width: 480px) {
+    .container {
+      min-height: calc(100vh - 200px); } }
 
 .wrapper {
   box-sizing: border-box;

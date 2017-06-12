@@ -1,6 +1,9 @@
 @import "../global/vars";
 
 $white: #FAFAFA;
+$errorcolor: #EF0038;
+$footerHeight: 100px;
+$mobileCartHeight: 100px;
 
 %icon {
   width: 20px;
@@ -41,6 +44,9 @@ $white: #FAFAFA;
 }
 
 %notification {
+  bottom: 30px;
+  right: 30px;
+  cursor: pointer;
   padding: 10px 20px;
   background-color: $white;
   display: inline-block;
@@ -48,6 +54,8 @@ $white: #FAFAFA;
   box-shadow: 0px 1px 3px rgba($black, .3);
   position: fixed;
   opacity: 0;
+  pointer-events: none;
+  z-index: 60;
   -webkit-transition: opacity .5s;
      -moz-transition: opacity .5s;
       -ms-transition: opacity .5s;
@@ -64,11 +72,19 @@ $white: #FAFAFA;
   
   &.show {
     opacity: 1;
+    pointer-events: auto;
+  }
+
+  a {
+    display: block;
+    height: 100%;
+    width: 100%;
   }
 }
 
 %page {
-  margin: 50px auto 50px;
+  margin: 50px auto 0;
+  padding-bottom: 50px;
   width: 100%;
 
   @media #{$mobile} {

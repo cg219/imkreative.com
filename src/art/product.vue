@@ -24,6 +24,7 @@
         <p class="product-page__shipping-info">
           Please allow 7-10 days for item(s) to be shipped. Each item is hand packaged and printed for the best possible quality.
         </p>
+        <share :desc="productTitle" :image="productImage" :link="address"></share>
       </div>
     </div>
     <div class="added-to-cart-notification" :class="{'show': addedNotificationShowing}">
@@ -38,11 +39,13 @@
 <script>
   const App = require('./app.vue');
   const Ting = require('./ting');
+  const Share = require('./share.vue');
 
   module.exports = {
     props: ['title', 'price', 'description', 'image'],
     components: {
-      App
+      App,
+      Share
     },
     data() {
       return {
@@ -56,7 +59,8 @@
         addedProductTitle: '',
         addedNotificationShowing: false,
         soldOutNotificationShowing: false,
-        isAvailable: true
+        isAvailable: true,
+        address: window.location.href
       }
     },
     computed: {
@@ -130,16 +134,6 @@
 
   .added-to-cart-notification, .sold-out-notification {
     @extend %notification;
-
-    bottom: 30px;
-    right: 30px;
-    cursor: pointer;
-
-    a {
-      display: block;
-      height: 100%;
-      width: 100%;
-    }
   }
 
   .product-page {

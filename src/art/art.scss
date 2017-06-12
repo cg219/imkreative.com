@@ -10,8 +10,13 @@ strong {
   color: $black;
 }
 
+html {
+  min-height: 100%;
+}
+
 body {
   background-color: $white;
+  min-height: 100%;
 
   @media #{$mobile, $sm-mobile} {
     margin-bottom: 100px;
@@ -21,6 +26,11 @@ body {
 .container {
   box-sizing: border-box;
   padding-top: 10px;
+  min-height: calc(100vh - #{$footerHeight});
+
+  @media #{$mobile, $sm-mobile} {
+    min-height: calc(100vh - #{$footerHeight + $mobileCartHeight});
+  }
 }
 
 .wrapper {

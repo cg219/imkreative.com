@@ -12357,18 +12357,22 @@ var map = {
 	"./fb-2.png": 257,
 	"./fb.png": 253,
 	"./gallery.vue": 199,
+	"./home.vue": 267,
 	"./ig-2.png": 258,
 	"./ig.png": 254,
 	"./index": 35,
 	"./index.js": 35,
 	"./nav.vue": 153,
+	"./pinterest.png": 266,
 	"./product.vue": 200,
+	"./share.vue": 261,
 	"./shop-item.vue": 154,
 	"./shop.vue": 201,
 	"./shopify": 15,
 	"./shopify.js": 15,
 	"./show-item.vue": 155,
 	"./show.vue": 202,
+	"./subscribe.vue": 274,
 	"./ting": 8,
 	"./ting.js": 8,
 	"./twitter-2.png": 259,
@@ -13247,6 +13251,7 @@ var Page = __webpack_require__(158);
 var Ting = __webpack_require__(8);
 var shopify = __webpack_require__(15);
 var routes = {
+  '/art': 'home.vue',
   '/art/contact': 'contact.vue',
   '/art/shows': 'show.vue',
   '/art/gallery': 'gallery.vue',
@@ -13289,12 +13294,18 @@ var app = new Vue({
     Ting.$on('FETCH_PRODUCTS', app.getProducts);
     Ting.$on('FETCH_PRODUCT', app.getProduct);
     Ting.$on('FETCH_CART', app.getCart);
+    Ting.$on('FETCH_FEATURED', app.getFeatured);
   },
 
   methods: {
     getProducts: function getProducts() {
       shopify.fetchAllProducts().then(function (products) {
         Ting.$emit('PRODUCTS_FETCHED', products);
+      });
+    },
+    getFeatured: function getFeatured() {
+      shopify.fetchQueryProducts({ collection_id: '391278534' }).then(function (products) {
+        Ting.$emit('FEATURED_FETCHED', products);
       });
     },
     getProduct: function getProduct(id) {
@@ -25236,6 +25247,8 @@ module.exports = {
 //
 //
 //
+//
+//
 
 const ArtNav = __webpack_require__(153);
 const Ting = __webpack_require__(8);
@@ -25247,6 +25260,9 @@ module.exports = {
   data() {
     return {
       navData: [{
+        url: "/art",
+        title: "Home"
+      }, {
         url: "/art/gallery",
         title: "Gallery"
       }, {
@@ -25325,12 +25341,62 @@ module.exports = {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 const App = __webpack_require__(5);
+const axios = __webpack_require__(17);
 
 module.exports = {
   components: {
     App
+  },
+  data() {
+    return {
+      name: '',
+      email: '',
+      message: '',
+      missingName: false,
+      missingEmail: false,
+      missingMessage: false,
+      showEmailNotification: false
+    };
+  },
+  methods: {
+    validateForm(event) {
+      event.preventDefault();
+
+      this.missingName = this.name.length < 1;
+      this.missingEmail = !/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(this.email);
+      this.missingMessage = this.message.length < 10;
+
+      if (this.missingName === false && this.missingEmail === false && this.missingMessage === false) {
+        this.sendEmail();
+      }
+    },
+    sendEmail() {
+      axios.post('api/send-email', {
+        message: this.message,
+        name: this.name,
+        email: this.email
+      }).then(response => {
+        this.emailConfirmation();
+        this.name = '';
+        this.email = '';
+        this.message = '';
+      });
+    },
+    emailConfirmation() {
+      this.showEmailNotification = true;
+
+      setTimeout(() => this.showEmailNotification = false, 3000);
+    }
   }
 };
 
@@ -25475,14 +25541,17 @@ module.exports = {
 //
 //
 //
+//
 
 const App = __webpack_require__(5);
 const Ting = __webpack_require__(8);
+const Share = __webpack_require__(261);
 
 module.exports = {
   props: ['title', 'price', 'description', 'image'],
   components: {
-    App
+    App,
+    Share
   },
   data() {
     return {
@@ -25496,7 +25565,8 @@ module.exports = {
       addedProductTitle: '',
       addedNotificationShowing: false,
       soldOutNotificationShowing: false,
-      isAvailable: true
+      isAvailable: true,
+      address: window.location.href
     };
   },
   computed: {
@@ -25640,7 +25710,6 @@ module.exports = {
   },
   methods: {
     updateProducts(fetchedProducts) {
-      console.log(fetchedProducts);
       this.products = fetchedProducts;
     }
   }
@@ -25664,10 +25733,10 @@ module.exports = {
 const moment = __webpack_require__(0);
 
 module.exports = {
-  props: ['type', 'title', 'venue', 'location', 'date', 'link'],
+  props: ['type', 'title', 'venue', 'location', 'date', 'link', 'showUpcoming'],
   data() {
     return {
-      isUpcoming: Date.now() < this.date
+      isUpcoming: this.showUpcoming
     };
   },
   computed: {
@@ -25709,37 +25778,37 @@ module.exports = {
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 const App = __webpack_require__(5);
 const ShowItem = __webpack_require__(155);
+const axios = __webpack_require__(17);
 
 module.exports = {
   components: {
     App,
     ShowItem
+  },
+  data() {
+    return {
+      shows: []
+    };
+  },
+  computed: {
+    upcoming() {
+      return this.shows.filter(show => {
+        return Date.now() <= new Date(show.date);
+      });
+    },
+    past() {
+      return this.shows.filter(show => {
+        return Date.now() > new Date(show.date);
+      });
+    }
+  },
+  created() {
+    axios.get('/api/shows').then(data => {
+      this.shows = data.data;
+    });
   }
 };
 
@@ -31421,31 +31490,117 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "contact-page__input"
   }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.name),
+      expression: "name"
+    }],
     attrs: {
       "type": "text",
       "placeholder": "Name (Required)",
       "required": ""
+    },
+    domProps: {
+      "value": (_vm.name)
+    },
+    on: {
+      "change": function($event) {
+        _vm.missingName = false
+      },
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.name = $event.target.value
+      }
     }
-  })]), _vm._v(" "), _c('div', {
+  })]), _vm._v(" "), _c('p', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.missingName),
+      expression: "missingName"
+    }],
+    staticClass: "contact-page__error"
+  }, [_vm._v("Please enter a name")]), _vm._v(" "), _c('div', {
     staticClass: "contact-page__input"
   }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.email),
+      expression: "email"
+    }],
     attrs: {
       "type": "email",
       "placeholder": "Email (Required)",
       "required": ""
+    },
+    domProps: {
+      "value": (_vm.email)
+    },
+    on: {
+      "change": function($event) {
+        _vm.missingEmail = false
+      },
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.email = $event.target.value
+      }
     }
-  })]), _vm._v(" "), _c('div', {
+  })]), _vm._v(" "), _c('p', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.missingEmail),
+      expression: "missingEmail"
+    }],
+    staticClass: "contact-page__error"
+  }, [_vm._v("Please enter a valid email")]), _vm._v(" "), _c('div', {
     staticClass: "contact-page__input"
   }, [_c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.message),
+      expression: "message"
+    }],
     attrs: {
-      "placeholder": "Message (Required)",
+      "placeholder": "Message (Min 10 characters) (Required)",
       "required": ""
+    },
+    domProps: {
+      "value": (_vm.message)
+    },
+    on: {
+      "change": function($event) {
+        _vm.missingMessage = false
+      },
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.message = $event.target.value
+      }
     }
-  })]), _vm._v(" "), _c('button', {
+  })]), _vm._v(" "), _c('p', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.missingMessage),
+      expression: "missingMessage"
+    }],
+    staticClass: "contact-page__error"
+  }, [_vm._v("Please enter a message atleast 10 characters long.")]), _vm._v(" "), _c('button', {
     attrs: {
       "type": "submit"
+    },
+    on: {
+      "click": _vm.validateForm
     }
-  }, [_vm._v("Send")])])])])])
+  }, [_vm._v("Send")])])])]), _vm._v(" "), _c('div', {
+    staticClass: "email-notification",
+    class: {
+      'show': _vm.showEmailNotification
+    }
+  }, [_c('p', [_vm._v("Your email has been sent")])])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -31550,7 +31705,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
+  return _c('div', [_c('div', {
     staticClass: "container"
   }, [_c('div', {
     staticClass: "wrapper"
@@ -31561,7 +31716,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "data": _vm.navData
     }
-  })], 1), _vm._v(" "), _vm._t("default")], 2), _vm._v(" "), _vm._m(0), _vm._v(" "), _c('div', {
+  })], 1), _vm._v(" "), _vm._t("default")], 2), _vm._v(" "), _c('div', {
     staticClass: "mobile-cart"
   }, [_c('a', {
     attrs: {
@@ -31573,7 +31728,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     class: {
       empty: _vm.itemCount == 0
     }
-  }, [_vm._v(_vm._s(_vm.itemCount))])])])])])
+  }, [_vm._v(_vm._s(_vm.itemCount))])])])])]), _vm._v(" "), _vm._m(0)])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('footer', [_c('ul', [_c('li', {
     staticClass: "instagram"
@@ -31713,7 +31868,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "product-page__shipping-info-heading"
   }, [_vm._v("Shipping Info")]), _vm._v(" "), _c('p', {
     staticClass: "product-page__shipping-info"
-  }, [_vm._v("\n        Please allow 7-10 days for item(s) to be shipped. Each item is hand packaged and printed for the best possible quality.\n      ")])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v("\n        Please allow 7-10 days for item(s) to be shipped. Each item is hand packaged and printed for the best possible quality.\n      ")]), _vm._v(" "), _c('share', {
+    attrs: {
+      "desc": _vm.productTitle,
+      "image": _vm.productImage,
+      "link": _vm.address
+    }
+  })], 1)]), _vm._v(" "), _c('div', {
     staticClass: "added-to-cart-notification",
     class: {
       'show': _vm.addedNotificationShowing
@@ -31745,52 +31906,30 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('app', [_c('div', {
     staticClass: "event-page"
-  }, [_c('h1', [_vm._v("Events")]), _vm._v(" "), _c('h2', [_vm._v("Upcoming Shows")]), _vm._v(" "), _c('show-item', {
-    attrs: {
-      "title": 'The New Renaissance Day Party',
-      "date": new Date(2017, 5, 25),
-      "type": 'Group',
-      "venue": 'Fantasy in Color Gallery',
-      "location": 'New York',
-      "link": 'https://www.eventbrite.com/e/fantasy-in-color-presents-the-new-renaissance-day-party-tickets-34937338520?aff=utm_source%3Deb_email%26utm_medium%3Demail%26utm_campaign%3Dnew_event_email&utm_term=eventurl_text'
-    }
-  }), _vm._v(" "), _c('show-item', {
-    attrs: {
-      "title": 'Pancakes and Booze Art Show NYC',
-      "date": new Date(2017, 9, 11),
-      "type": 'Group',
-      "venue": 'M1-5 Lounge',
-      "location": 'New York',
-      "link": 'https://www.facebook.com/events/1971416679761494/?acontext=%7B%22action_history%22%3A%22%5B%7B%5C%22surface%5C%22%3A%5C%22external%5C%22%2C%5C%22mechanism%5C%22%3A%5C%22social_plugin%5C%22%2C%5C%22extra_data%5C%22%3A%5B%5D%7D%5D%22%7D'
-    }
-  }), _vm._v(" "), _c('h2', [_vm._v("Past Shows")]), _vm._v(" "), _c('show-item', {
-    attrs: {
-      "title": 'The Vancouver Pancakes and Booze Art Show',
-      "date": new Date(2017, 1, 2),
-      "type": 'Group',
-      "venue": 'Fortune Sound Club',
-      "location": 'Vancouver, Canada',
-      "link": 'http://www.pancakesandbooze.com'
-    }
-  }), _vm._v(" "), _c('show-item', {
-    attrs: {
-      "title": 'The Seattle Pancakes and Booze Art Show',
-      "date": new Date(2017, 0, 28),
-      "type": 'Group',
-      "venue": 'El Corazon',
-      "location": 'Seattle',
-      "link": 'http://www.pancakesandbooze.com'
-    }
-  }), _vm._v(" "), _c('show-item', {
-    attrs: {
-      "title": 'Pancakes and Booze Art Show NYC',
-      "date": new Date(2016, 9, 19),
-      "type": 'Group',
-      "venue": 'M1-5 Lounge',
-      "location": 'New York',
-      "link": 'http://www.pancakesandbooze.com'
-    }
-  })], 1)])
+  }, [_c('h1', [_vm._v("Events")]), _vm._v(" "), _c('h2', [_vm._v("Upcoming Shows")]), _vm._v(" "), _vm._l((_vm.upcoming), function(show) {
+    return _c('show-item', {
+      attrs: {
+        "title": show.title,
+        "date": show.date,
+        "type": show.type,
+        "venue": show.venue,
+        "location": show.location,
+        "link": show.link,
+        "showUpcoming": true
+      }
+    })
+  }), _vm._v(" "), _c('h2', [_vm._v("Past Shows")]), _vm._v(" "), _vm._l((_vm.past), function(show) {
+    return _c('show-item', {
+      attrs: {
+        "title": show.title,
+        "date": show.date,
+        "type": show.type,
+        "venue": show.venue,
+        "location": show.location,
+        "link": show.link
+      }
+    })
+  })], 2)])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -32252,6 +32391,451 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADD
 /***/ (function(module, exports) {
 
 module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA3hpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTM4IDc5LjE1OTgyNCwgMjAxNi8wOS8xNC0wMTowOTowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDplZjQ2ODQ3Yi0yNzE2LTQxNzItYTg0ZC05NWNkMjQ0MGI1YWQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NDE0OUI2N0U0NUIwMTFFN0IxRTE4NjE3NDczMDNENkMiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NDE0OUI2N0Q0NUIwMTFFN0IxRTE4NjE3NDczMDNENkMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTcgKE1hY2ludG9zaCkiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDplZjQ2ODQ3Yi0yNzE2LTQxNzItYTg0ZC05NWNkMjQ0MGI1YWQiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6ZWY0Njg0N2ItMjcxNi00MTcyLWE4NGQtOTVjZDI0NDBiNWFk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"
+
+/***/ }),
+/* 261 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(264)
+
+var Component = __webpack_require__(2)(
+  /* script */
+  __webpack_require__(262),
+  /* template */
+  __webpack_require__(263),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Users/kreativemente/Websites/imkreative.com/src/art/share.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] share.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-24770665", Component.options)
+  } else {
+    hotAPI.reload("data-v-24770665", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 262 */
+/***/ (function(module, exports) {
+
+//
+//
+//
+//
+//
+//
+//
+//
+
+module.exports = {
+  props: ['desc', 'image', 'link'],
+  data() {
+    return {};
+  },
+  computed: {
+    pinterest() {
+      return `https://www.pinterest.com/pin/create/link/?description=${encodeURIComponent(this.desc)}&media=${encodeURIComponent(this.image)}&url=${encodeURIComponent(this.link)}`;
+    },
+    twitter() {
+      return `https://twitter.com/intent/tweet?url=${encodeURIComponent(this.link)}&text=${encodeURIComponent(this.desc)}+by+@kreativemente`;
+    },
+    facebook() {
+      return `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(this.link)}`;
+    }
+  }
+};
+
+/***/ }),
+/* 263 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('ul', {
+    staticClass: "share"
+  }, [_c('li', {
+    staticClass: "share__twitter"
+  }, [_c('a', {
+    attrs: {
+      "href": _vm.twitter,
+      "target": "_blank"
+    }
+  }, [_vm._v("Twitter")])]), _vm._v(" "), _c('li', {
+    staticClass: "share__facebook"
+  }, [_c('a', {
+    attrs: {
+      "href": _vm.facebook,
+      "target": "_blank"
+    }
+  }, [_vm._v("Facebook")])]), _vm._v(" "), _c('li', {
+    staticClass: "share__pinterest"
+  }, [_c('a', {
+    attrs: {
+      "href": _vm.pinterest,
+      "target": "_blank"
+    }
+  }, [_vm._v("Pinterest")])])])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-24770665", module.exports)
+  }
+}
+
+/***/ }),
+/* 264 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 265 */,
+/* 266 */
+/***/ (function(module, exports) {
+
+module.exports = "data:image/png;base64,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"
+
+/***/ }),
+/* 267 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(272)
+
+var Component = __webpack_require__(2)(
+  /* script */
+  __webpack_require__(268),
+  /* template */
+  __webpack_require__(269),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Users/kreativemente/Websites/imkreative.com/src/art/home.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] home.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-c64c226e", Component.options)
+  } else {
+    hotAPI.reload("data-v-c64c226e", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 268 */
+/***/ (function(module, exports, __webpack_require__) {
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+const App = __webpack_require__(5);
+const ShowItem = __webpack_require__(155);
+const Subscribe = __webpack_require__(274);
+const Ting = __webpack_require__(8);
+const axios = __webpack_require__(17);
+
+module.exports = {
+  components: {
+    App,
+    ShowItem,
+    Subscribe
+  },
+  data() {
+    return {
+      shows: [],
+      products: []
+    };
+  },
+  created() {
+    Ting.$emit('FETCH_FEATURED');
+    Ting.$on('FEATURED_FETCHED', this.updateProducts);
+
+    axios.get('/api/shows').then(data => {
+      this.shows = data.data.filter(show => {
+        return Date.now() <= new Date(show.date);
+      });
+    });
+  },
+  methods: {
+    updateProducts(fetchedProducts) {
+      this.products = fetchedProducts;
+    }
+  }
+};
+
+/***/ }),
+/* 269 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('app', [_c('div', {
+    staticClass: "homepage"
+  }, [(_vm.shows.length > 0) ? [_c('div', {
+    staticClass: "event-page"
+  }, [_c('h2', [_vm._v("Upcoming Events")]), _vm._v(" "), _vm._l((_vm.shows), function(show) {
+    return _c('show-item', {
+      attrs: {
+        "title": show.title,
+        "date": show.date,
+        "type": show.type,
+        "venue": show.venue,
+        "location": show.location,
+        "link": show.link,
+        "showUpcoming": true
+      }
+    })
+  })], 2)] : _vm._e(), _vm._v(" "), (this.products.length > 0) ? [_c('div', {
+    staticClass: "shop-page"
+  }, [_c('h2', [_vm._v("Featured Products")]), _vm._v(" "), _c('div', {
+    staticClass: "shop-page__item-container"
+  }, _vm._l((_vm.products), function(product) {
+    return _c('div', {
+      staticClass: "shop-item"
+    }, [_c('div', {
+      staticClass: "shop-item__image-container",
+      class: {
+        'sold-out': !product.attrs.available
+      },
+      style: ({
+        backgroundImage: ("url(" + (product.selectedVariantImage.variants[6].src) + ")")
+      })
+    }, [_c('span', [_vm._v(_vm._s(product.title))]), _vm._v(" "), _c('a', {
+      attrs: {
+        "href": ("/art/shop/product/" + (product.id))
+      }
+    })])])
+  }))])] : _vm._e(), _vm._v(" "), _c('h2', [_vm._v("Subscribe for updates")]), _vm._v(" "), _c('subscribe')], 2)])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-c64c226e", module.exports)
+  }
+}
+
+/***/ }),
+/* 270 */,
+/* 271 */,
+/* 272 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 273 */,
+/* 274 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(276)
+
+var Component = __webpack_require__(2)(
+  /* script */
+  __webpack_require__(275),
+  /* template */
+  __webpack_require__(277),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Users/kreativemente/Websites/imkreative.com/src/art/subscribe.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] subscribe.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-10f10160", Component.options)
+  } else {
+    hotAPI.reload("data-v-10f10160", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 275 */
+/***/ (function(module, exports, __webpack_require__) {
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+const App = __webpack_require__(5);
+const axios = __webpack_require__(17);
+
+module.exports = {
+  components: {
+    App
+  },
+  data() {
+    return {
+      email: '',
+      subscribedNotification: false
+    };
+  },
+  methods: {
+    validateForm(event) {
+      event.preventDefault();
+
+      const valid = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(this.email);
+
+      if (valid) {
+        this.saveEmail();
+      }
+    },
+    saveEmail() {
+      axios.post('api/save-email', {
+        email: this.email
+      }).then(response => {
+        this.subscribeConfirmation();
+        this.email = '';
+      });
+    },
+    subscribeConfirmation() {
+      this.subscribedNotification = true;
+
+      setTimeout(() => this.subscribedNotification = false, 3000);
+    }
+  }
+};
+
+/***/ }),
+/* 276 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 277 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "subscribe-container"
+  }, [_c('div', {
+    staticClass: "subscribe-container__input"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.email),
+      expression: "email"
+    }],
+    attrs: {
+      "type": "email",
+      "placeholder": "Email (Required)",
+      "required": ""
+    },
+    domProps: {
+      "value": (_vm.email)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.email = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('button', {
+    attrs: {
+      "type": "submit"
+    },
+    on: {
+      "click": _vm.validateForm
+    }
+  }, [_vm._v("Send")]), _vm._v(" "), _c('div', {
+    staticClass: "sub-notification",
+    class: {
+      'show': _vm.subscribedNotification
+    }
+  }, [_c('p', [_vm._v("Thank you for subscribing.")])])])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-10f10160", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

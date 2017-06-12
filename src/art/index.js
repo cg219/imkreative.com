@@ -4,6 +4,7 @@ const Page = require('page');
 const Ting = require('./ting');
 const shopify = require('./shopify');
 const routes = {
+  '/art' : 'home.vue',
   '/art/contact' : 'contact.vue',
   '/art/shows' : 'show.vue',
   '/art/gallery' : 'gallery.vue',
@@ -41,12 +42,19 @@ const app = new Vue({
     Ting.$on('FETCH_PRODUCTS', app.getProducts);
     Ting.$on('FETCH_PRODUCT', app.getProduct);
     Ting.$on('FETCH_CART', app.getCart);
+    Ting.$on('FETCH_FEATURED', app.getFeatured);
   },
   methods: {
     getProducts() {
       shopify.fetchAllProducts()
         .then((products) => {
           Ting.$emit('PRODUCTS_FETCHED', products);
+        })
+    },
+    getFeatured() {
+      shopify.fetchQueryProducts({collection_id: '391278534'})
+        .then((products) => {
+          Ting.$emit('FEATURED_FETCHED', products);
         })
     },
     getProduct(id) {

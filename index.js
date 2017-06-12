@@ -3,6 +3,7 @@ const ghost = require('ghost');
 const path = require('path');
 const PORT = process.env.PORT || process.argv[2] || 5000;
 const API = require('./api');
+const bodyParser = require('body-parser');
 
 let app = express();
 let ghostOptions = {
@@ -10,6 +11,8 @@ let ghostOptions = {
 }
 
 app.use(express.static(__dirname + "/public"));
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 
 app.get('/portfolio', (req, res) => {
   res.sendFile(path.resolve(__dirname, './views/portfolio.html'));

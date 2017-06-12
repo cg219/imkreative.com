@@ -1,11 +1,20 @@
 <template>
-  <div class="container">
-    <div class="wrapper">
-      <header class="header">
-        <h1>Mente Gee</h1>
-        <art-nav :data="navData" class="header__nav"></art-nav>
-      </header>
-      <slot></slot>
+  <div>
+    <div class="container">
+      <div class="wrapper">
+        <header class="header">
+          <h1>Mente Gee</h1>
+          <art-nav :data="navData" class="header__nav"></art-nav>
+        </header>
+        <slot></slot>
+      </div>
+      <div class="mobile-cart">
+        <a href="/art/shop/cart">
+          <div class="cart-icon">
+            <p :class="{empty: itemCount == 0}">{{itemCount}}</p>
+          </div>
+        </a>
+      </div>
     </div>
     <footer>
       <ul>
@@ -16,13 +25,6 @@
       </ul>
       <p>Created by Clemente Gomez</p>
     </footer>
-    <div class="mobile-cart">
-      <a href="/art/shop/cart">
-        <div class="cart-icon">
-          <p :class="{empty: itemCount == 0}">{{itemCount}}</p>
-        </div>
-      </a>
-    </div>
   </div>
 </template>
 
@@ -37,6 +39,10 @@
     data() {
       return {
         navData: [
+          {
+            url: "/art",
+            title: "Home"
+          },
           {
             url: "/art/gallery",
             title: "Gallery"
@@ -74,7 +80,7 @@
   @import "vars";
 
   footer {
-    height: 100px;
+    height: $footerHeight;
     width: 100%;
     background-color: darken($white, 10%);
     position: relative;

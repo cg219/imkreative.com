@@ -38,7 +38,6 @@
     },
     methods: {
       updateProducts(fetchedProducts) {
-        console.log(fetchedProducts)
         this.products = fetchedProducts;
       }
     }
