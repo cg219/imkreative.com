@@ -46,7 +46,7 @@ if(process.env.NODE_ENV == "production"){
 
 }
 else{
-  app.listen(PORT, "216.70.82.169", () => {
+  app.listen(PORT, () => {
     console.log('Connected');
   })
 }
