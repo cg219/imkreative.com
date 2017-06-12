@@ -1,7 +1,7 @@
 const express = require('express');
 const ghost = require('ghost');
 const path = require('path');
-const PORT = process.env.PORT || process.argv[2] || 5000;
+const PORT = process.env.PORT || process.argv[2] || 1235;
 const API = require('./api');
 const bodyParser = require('body-parser');
 
