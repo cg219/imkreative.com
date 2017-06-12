@@ -38,6 +38,15 @@ ghost(ghostOptions)
     ghostServer.start(app);
   })
 
-app.listen(PORT, () => {
-  console.log('Connected');
-})
+
+if(process.env.NODE_ENV == "production"){
+  app.listen(PORT, "216.70.82.169", () => {
+    console.log('Connected');
+  })
+
+}
+else{
+  app.listen(PORT, () => {
+    console.log('Connected');
+  })
+}
