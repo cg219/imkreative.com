@@ -1,7 +1,7 @@
 const express = require('express');
-// const ghost = require('ghost');
+const ghost = require('ghost');
 const path = require('path');
-const PORT = process.env.PORT || process.argv[2] || 1235;
+const PORT = process.env.PORT || process.argv[2] || 5000;
 const API = require('./api');
 const bodyParser = require('body-parser');
 
@@ -31,12 +31,12 @@ app.get('/', (req, res) => {
 })
 app.use('/api', API);
 
-// ghost(ghostOptions)
-//   .then(ghostServer => {
-//     // console.log("HO", ghostServer.config)
-//     app.use(ghostServer.config.paths.subdir, ghostServer.rootApp);
-//     ghostServer.start(app);
-//   })
+ghost(ghostOptions)
+  .then(ghostServer => {
+    // console.log("HO", ghostServer.config)
+    app.use(ghostServer.config.paths.subdir, ghostServer.rootApp);
+    ghostServer.start(app);
+  })
 
 
 if(process.env.NODE_ENV == "production"){
