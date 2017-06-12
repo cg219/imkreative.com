@@ -31,12 +31,12 @@ app.get('/', (req, res) => {
 })
 app.use('/api', API);
 
-ghost(ghostOptions)
-  .then(ghostServer => {
-    // console.log("HO", ghostServer.config)
-    app.use(ghostServer.config.paths.subdir, ghostServer.rootApp);
-    ghostServer.start(app);
-  })
+// ghost(ghostOptions)
+//   .then(ghostServer => {
+//     // console.log("HO", ghostServer.config)
+//     app.use(ghostServer.config.paths.subdir, ghostServer.rootApp);
+//     ghostServer.start(app);
+//   })
 
 
 if(process.env.NODE_ENV == "production"){
