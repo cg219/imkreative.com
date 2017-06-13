@@ -2,33 +2,33 @@ const express = require('express');
 // const ghost = require('ghost');
 const path = require('path');
 const PORT = process.env.PORT || process.argv[2] || 5000;
-const API = require('./api');
+// const API = require('./api');
 const bodyParser = require('body-parser');
 
 let app = express();
-let ghostOptions = {
-  config: path.join(__dirname, './src/ghost/ghost.config.js')
-}
+// let ghostOptions = {
+//   config: path.join(__dirname, './src/ghost/ghost.config.js')
+// }
 
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
-app.get('/portfolio', (req, res) => {
-  res.sendFile(path.resolve(__dirname, './views/portfolio.html'));
-})
+// app.get('/portfolio', (req, res) => {
+//   res.sendFile(path.resolve(__dirname, './views/portfolio.html'));
+// })
 
-app.get('/art', (req, res) => {
-  res.sendFile(path.resolve(__dirname, './views/art.html'));
-})
+// app.get('/art', (req, res) => {
+//   res.sendFile(path.resolve(__dirname, './views/art.html'));
+// })
 
-app.get('/art/*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, './views/art.html'));
-})
+// app.get('/art/*', (req, res) => {
+//   res.sendFile(path.resolve(__dirname, './views/art.html'));
+// })
 
-app.get('/', (req, res) => {
-  res.sendFile(path.resolve(__dirname, './views/home.html'));
-})
+// app.get('/', (req, res) => {
+//   res.sendFile(path.resolve(__dirname, './views/home.html'));
+// })
 // app.use('/api', API);
 
 // ghost(ghostOptions)
