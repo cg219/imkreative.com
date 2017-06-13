@@ -29,7 +29,7 @@ app.get('/art/*', (req, res) => {
 app.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname, './views/home.html'));
 })
-app.use('/api', API);
+// app.use('/api', API);
 
 // ghost(ghostOptions)
 //   .then(ghostServer => {
