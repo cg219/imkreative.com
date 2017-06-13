@@ -1,5 +1,5 @@
 const express = require('express');
-const ghost = require('ghost');
+// const ghost = require('ghost');
 const path = require('path');
 const PORT = process.env.PORT || process.argv[2] || 5000;
 const API = require('./api');
