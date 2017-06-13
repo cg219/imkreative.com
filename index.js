@@ -41,12 +41,12 @@ ghost(ghostOptions)
 
 if(process.env.NODE_ENV == "production"){
   app.listen(PORT, "216.70.82.169", () => {
-    console.log('Connected');
+    console.log('Connected on Production');
   })
 
 }
 else{
   app.listen(PORT, () => {
-    console.log('Connected');
+    console.log('Connected on Dev');
   })
 }
