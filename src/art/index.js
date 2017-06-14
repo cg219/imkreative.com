@@ -3,6 +3,7 @@ const styles = require('./art.scss');
 const Page = require('page');
 const Ting = require('./ting');
 const shopify = require('./shopify');
+const Google = require('./../global/google')();
 const routes = {
   '/art' : 'home.vue',
   '/art/contact' : 'contact.vue',
