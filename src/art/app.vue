@@ -3,7 +3,7 @@
     <div class="container">
       <div class="wrapper">
         <header class="header">
-          <h1>Mente Gee</h1>
+          <h1><a href="/art">Mente Gee</a></h1>
           <art-nav :data="navData" class="header__nav"></art-nav>
         </header>
         <slot></slot>
