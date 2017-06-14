@@ -24,6 +24,9 @@ config = {
         server: {
             host: '216.70.82.169',
             port: '1235'
+        },
+        paths: {
+            contentPath: path.join(__dirname, '../../content/')
         }
     },
 
