@@ -33,7 +33,6 @@ app.use('/api', API);
 
 ghost(ghostOptions)
   .then(ghostServer => {
-    // console.log("HO", ghostServer.config);
     app.use(ghostServer.config.paths.subdir, ghostServer.rootApp);
     ghostServer.start(app);
   })
