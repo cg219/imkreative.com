@@ -4,6 +4,6 @@ module.exports = () => {
     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
     })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-ga('create', 'UA-XXXXXXXX-X', 'yourblog.ghost.io');
+ga('create', 'UA-31581798-4', 'imkreative.com');
 ga('send', 'pageview');
 }
