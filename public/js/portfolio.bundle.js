@@ -12,13 +12,13 @@ webpackJsonp([1],{
 
 
 /* styles */
-__webpack_require__(196)
+__webpack_require__(197)
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(181),
+  __webpack_require__(182),
   /* template */
-  __webpack_require__(238),
+  __webpack_require__(241),
   /* scopeId */
   null,
   /* cssModules */
@@ -30,7 +30,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 181:
+/***/ 182:
 /***/ (function(module, exports, __webpack_require__) {
 
 //
@@ -60,7 +60,7 @@ module.exports = Component.exports
 //
 
 const axios = __webpack_require__(6);
-const PortfolioItem = __webpack_require__(229);
+const PortfolioItem = __webpack_require__(232);
 
 module.exports = {
   data() {
@@ -80,7 +80,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 182:
+/***/ 183:
 /***/ (function(module, exports) {
 
 //
@@ -123,7 +123,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 184:
+/***/ 185:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -143,32 +143,32 @@ new Vue({
 
 /***/ }),
 
-/***/ 188:
+/***/ 189:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
 
-/***/ 196:
+/***/ 197:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
 
-/***/ 229:
+/***/ 232:
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(188)
+__webpack_require__(189)
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(182),
+  __webpack_require__(183),
   /* template */
-  __webpack_require__(230),
+  __webpack_require__(233),
   /* scopeId */
   null,
   /* cssModules */
@@ -180,7 +180,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 230:
+/***/ 233:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -227,7 +227,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 
 /***/ }),
 
-/***/ 238:
+/***/ 241:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -269,4 +269,4 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 
 /***/ })
 
-},[184]);
+},[185]);

@@ -47,7 +47,10 @@
       subscribeConfirmation() {
         this.subscribedNotification = true;
 
-        setTimeout(() => this.subscribedNotification = false, 3000);
+        setTimeout(() => {
+          this.subscribedNotification = false;
+          this.$emit('subscribed');
+        }, 1000);
       }
     }
   }

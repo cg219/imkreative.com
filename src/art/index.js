@@ -11,7 +11,8 @@ const routes = {
   '/art/gallery' : 'gallery.vue',
   '/art/shop' : 'shop.vue',
   '/art/shop/product/:id' : 'product.vue',
-  '/art/shop/cart' : 'cart.vue'
+  '/art/shop/cart' : 'cart.vue',
+  '/art/subscribe' : 'subscribe-now.vue'
 }
 
 const app = new Vue({
