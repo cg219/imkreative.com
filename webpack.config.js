@@ -7,7 +7,8 @@ module.exports = {
   entry: {
     portfolio: './src/portfolio/index.js',
     home: './src/home/index.js',
-    art: './src/art/index.js'
+    art: './src/art/index.js',
+    admin: './src/admin/index.js'
   },
   output: {
     filename: '[name].bundle.js',

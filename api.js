@@ -187,14 +187,14 @@ Router.post('/send-email', (req, res) => {
 })
 
 Router.post('/save-email', (req, res) => {
-  redis.lpush('emails', req.body.email)
+  redis.sadd('emails', req.body.email)
     .then(result => {
       res.json({status: 200});
     })
 })
 
 Router.get('/get-email-list', (req, res) => {
-  redis.lrange('emails', 0, -1)
+  redis.smembers('emails')
     .then(result => {
       res.json({
         emails: result
