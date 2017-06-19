@@ -117,6 +117,11 @@ module.exports = {
     },
     offHover(event) {
       this.isHovered = false;
+    },
+    gotoProject(event) {
+      if (this.link) {
+        window.location = this.link;
+      }
     }
   }
 };
@@ -188,7 +193,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "item",
     on: {
       "mouseover": _vm.onHover,
-      "mouseout": _vm.offHover
+      "mouseout": _vm.offHover,
+      "click": _vm.gotoProject
     }
   }, [_c('img', {
     class: {

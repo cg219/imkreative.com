@@ -1,5 +1,5 @@
 <template>
-  <div class="item" @mouseover="onHover" @mouseout="offHover">
+  <div class="item" @mouseover="onHover" @mouseout="offHover" @click="gotoProject">
     <img :class="{hover: isHovered}" :src="thumbnail" :alt="name" />
     <div class="item__info">
       <div :class="{'item__info-background': true, hover: isHovered}"></div>
@@ -32,6 +32,11 @@
       },
       offHover(event) {
         this.isHovered = false;
+      },
+      gotoProject(event) {
+        if(this.link) {
+          window.location = this.link;
+        }
       }
     }
   }
