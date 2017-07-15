@@ -214,7 +214,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "content-title"
   }, [_vm._v(_vm._s(_vm.postInfo.title))])]), _vm._v(" "), _c('li', [_c('h2', {
     staticClass: "subheader"
-  }, [_vm._v("Featured Item")]), _vm._v(" "), _c('a', {
+  }, [_vm._v("Featured Shop Item")]), _vm._v(" "), _c('a', {
     attrs: {
       "href": _vm.itemInfo.url,
       "target": "_blank"

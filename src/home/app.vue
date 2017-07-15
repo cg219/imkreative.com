@@ -24,7 +24,7 @@
           <h3 class="content-title">{{postInfo.title}}</h3>
         </li>
         <li>
-          <h2 class="subheader">Featured Item</h2>
+          <h2 class="subheader">Featured Shop Item</h2>
           <a :href="itemInfo.url" target="_blank">
             <div class="thumbnail" :style="itemBackground"></div>
           </a>
