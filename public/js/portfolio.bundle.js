@@ -59,7 +59,7 @@ module.exports = Component.exports
 //
 //
 
-const axios = __webpack_require__(6);
+const axios = __webpack_require__(5);
 const PortfolioItem = __webpack_require__(232);
 
 module.exports = {
@@ -134,7 +134,7 @@ module.exports = {
 "use strict";
 
 
-var Vue = __webpack_require__(5).default;
+var Vue = __webpack_require__(6).default;
 var Portfolio = __webpack_require__(147);
 var styles = __webpack_require__(144);
 var Google = __webpack_require__(7)();

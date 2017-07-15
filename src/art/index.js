@@ -2,7 +2,7 @@ const Vue = require('vue').default;
 const styles = require('./art.scss');
 const Page = require('page');
 const Ting = require('./ting');
-const shopify = require('./shopify');
+const shopify = require('./../global/shopify');
 const Google = require('./../global/google')();
 const routes = {
   '/art' : 'home.vue',
