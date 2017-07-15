@@ -82,7 +82,7 @@ module.exports = Component.exports
 const axios = __webpack_require__(5);
 const shopify = __webpack_require__(15);
 
-const secret = '21b9406958b1';
+const secret = 'a64c85be6766'; //'21b9406958b1';
 const client = 'ghost-frontend';
 const api_url = `/blog/ghost/api/v0.1/posts?client_id=${client}&client_secret=${secret}`;
 const product_base_url = '/art/shop/product';
