@@ -47,7 +47,7 @@
   const axios = require('axios');
   const shopify = require('./../global/shopify');
 
-  const secret = '21b9406958b1';
+  const secret = 'a64c85be6766';//'21b9406958b1';
   const client = 'ghost-frontend';
   const api_url = `/blog/ghost/api/v0.1/posts?client_id=${client}&client_secret=${secret}`;
   const product_base_url = '/art/shop/product';
