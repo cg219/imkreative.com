@@ -141,7 +141,7 @@
     }
 
     li {
-      margin-right: 20px;
+      margin-right: 15px;
       font-size: 18px;
 
       @media #{$mobile} {

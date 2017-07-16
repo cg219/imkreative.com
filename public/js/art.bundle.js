@@ -16621,6 +16621,9 @@ module.exports = {
         url: "/art/shows",
         title: "Shows"
       }, {
+        url: "/art/subscribe",
+        title: "Newsletter"
+      }, {
         url: "/art/contact",
         title: "Contact"
       }],

@@ -56,6 +56,10 @@
             title: "Shows"
           },
           {
+            url: "/art/subscribe",
+            title: "Newsletter"
+          },
+          {
             url: "/art/contact",
             title: "Contact"
           }
