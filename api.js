@@ -187,10 +187,12 @@ Router.post('/send-email', (req, res) => {
 })
 
 Router.post('/save-email', (req, res) => {
-  redis.sadd('emails', req.body.email)
-    .then(result => {
-      res.json({status: 200});
-    })
+  mailgun.lists('artbymente@mailer.imkreative.com').members().add({
+    members: [{address: req.body.email}],
+    subscribed: true
+  }, function(err, response){
+    res.json({status: 200});
+  })
 })
 
 Router.get('/get-email-list', (req, res) => {
