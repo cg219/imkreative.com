@@ -1,24 +1,24 @@
 webpackJsonp([2],{
 
-/***/ 143:
+/***/ 144:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
 
-/***/ 146:
+/***/ 147:
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(201)
+__webpack_require__(204)
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(181),
+  __webpack_require__(183),
   /* template */
-  __webpack_require__(245),
+  __webpack_require__(249),
   /* scopeId */
   null,
   /* cssModules */
@@ -30,7 +30,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 181:
+/***/ 183:
 /***/ (function(module, exports, __webpack_require__) {
 
 //
@@ -159,15 +159,15 @@ module.exports = {
 
 /***/ }),
 
-/***/ 184:
+/***/ 186:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var Vue = __webpack_require__(6).default;
-var Home = __webpack_require__(146);
-var styles = __webpack_require__(143);
+var Home = __webpack_require__(147);
+var styles = __webpack_require__(144);
 var Google = __webpack_require__(7)();
 
 new Vue({
@@ -179,14 +179,14 @@ new Vue({
 
 /***/ }),
 
-/***/ 201:
+/***/ 204:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
 
-/***/ 245:
+/***/ 249:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -271,4 +271,4 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 
 /***/ })
 
-},[184]);
+},[186]);

@@ -25,16 +25,19 @@
       </ul>
       <p>Created by Clemente Gomez</p>
     </footer>
+    <subscribe-popup :class="{'show': showPopup}" v-on:exit="closePopup" />
   </div>
 </template>
 
 <script>
   const ArtNav = require('./nav.vue');
   const Ting = require('./ting');
+  const SubscribePopup = require('./subscribe-popup.vue');
 
   module.exports = {
     components: {
-      ArtNav
+      ArtNav,
+      SubscribePopup
     },
     data() {
       return {
@@ -64,18 +67,38 @@
             title: "Contact"
           }
         ],
-        itemCount: 0
+        itemCount: 0,
+        showPopup: false
       }
     },
     methods: {
       updateCart(cart) {
         this.itemCount = cart.lineItemCount;
       },
+      closePopup() {
+        this.showPopup = false;
+        localStorage.setItem('subscribed', false);
+        sessionStorage.setItem('keep-popup-closed', true);
+      },
+      checkOpt() {
+        if(localStorage) {
+          const isSubscribed = localStorage.getItem('subscribed') == 'true';
+          const alreadyOpened = sessionStorage.getItem('keep-popup-closed') == 'true';
+
+          if(!isSubscribed && !alreadyOpened) {
+            setTimeout(() => {
+              this.showPopup = true;
+            }, 5000);
+          }
+        }
+      }
     },
     created() {
       Ting.$once('CART_FETCHED', this.updateCart);
       Ting.$on('UPDATE_CART', this.updateCart);
       Ting.$emit('FETCH_CART');
+
+      this.checkOpt();
     }
   }
 </script>

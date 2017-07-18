@@ -1,24 +1,24 @@
 webpackJsonp([1],{
 
-/***/ 144:
+/***/ 145:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
 
-/***/ 147:
+/***/ 148:
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(197)
+__webpack_require__(200)
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(182),
+  __webpack_require__(184),
   /* template */
-  __webpack_require__(241),
+  __webpack_require__(245),
   /* scopeId */
   null,
   /* cssModules */
@@ -30,7 +30,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 182:
+/***/ 184:
 /***/ (function(module, exports, __webpack_require__) {
 
 //
@@ -60,7 +60,7 @@ module.exports = Component.exports
 //
 
 const axios = __webpack_require__(5);
-const PortfolioItem = __webpack_require__(232);
+const PortfolioItem = __webpack_require__(235);
 
 module.exports = {
   data() {
@@ -80,7 +80,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 183:
+/***/ 185:
 /***/ (function(module, exports) {
 
 //
@@ -128,15 +128,15 @@ module.exports = {
 
 /***/ }),
 
-/***/ 185:
+/***/ 187:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var Vue = __webpack_require__(6).default;
-var Portfolio = __webpack_require__(147);
-var styles = __webpack_require__(144);
+var Portfolio = __webpack_require__(148);
+var styles = __webpack_require__(145);
 var Google = __webpack_require__(7)();
 
 new Vue({
@@ -148,32 +148,32 @@ new Vue({
 
 /***/ }),
 
-/***/ 189:
+/***/ 191:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
 
-/***/ 197:
+/***/ 200:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
 
-/***/ 232:
+/***/ 235:
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(189)
+__webpack_require__(191)
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(183),
+  __webpack_require__(185),
   /* template */
-  __webpack_require__(233),
+  __webpack_require__(236),
   /* scopeId */
   null,
   /* cssModules */
@@ -185,7 +185,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 233:
+/***/ 236:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -233,7 +233,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 
 /***/ }),
 
-/***/ 241:
+/***/ 245:
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -275,4 +275,4 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 
 /***/ })
 
-},[185]);
+},[187]);

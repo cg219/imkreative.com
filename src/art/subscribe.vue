@@ -4,9 +4,12 @@
       <input type="email" placeholder="Email (Required)" v-model="email" required />
     </div>
     <div class="subscribe-container__input">
-      <input type="text" placeholder="First Name (Required)" v-model="fname" required />
+      <input type="text" placeholder="Name (Required)" v-model="fname" required />
     </div>
     <button type="submit" @click="validateForm">Send</button>
+    <div class="activity subscribe-container__activity" v-show="showActivity">
+      <div class="activity__icon"></div>
+    </div>
     <div class="sub-notification" :class="{'show': subscribedNotification}">
       <p>Thank you for subscribing.</p>
     </div>
@@ -14,7 +17,7 @@
       <p>Email Address is invalid.</p>
     </div>
     <div class="name-error-notification" :class="{'show': nameErrorNotification}">
-      <p>First Name is required.</p>
+      <p>Name is required.</p>
     </div>
   </div>
 </template>
@@ -33,12 +36,14 @@
         fname: '',
         subscribedNotification: false,
         emailErrorNotification: false,
-        nameErrorNotification: false
+        nameErrorNotification: false,
+        showActivity: false
       }
     },
     methods: {
       validateForm(event) {
         event.preventDefault();
+        this.showActivity = true;
 
         const validEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(this.email);
         const validName = this.fname != '';
@@ -48,10 +53,12 @@
         }
         else {
           if(!validEmail) {
+            this.showActivity = false;
             this.errorNotification();
           }
 
           if(!validName) {
+            this.showActivity = false;
             this.errorNotification(1);
           }
         }
@@ -63,6 +70,7 @@
             fname: this.fname
           })
           .then(response => {
+            this.showActivity = false;
             this.subscribeConfirmation();
             this.email = '';
             this.fname = '';
@@ -103,6 +111,7 @@
   .subscribe-container {
     @extend %page;
     
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -114,6 +123,10 @@
 
       width: 100%;
       margin: 0 0 5px;
+    }
+
+    &__activity .activity__icon {
+      top: -50px;
     }
 
     .sub-notification,
