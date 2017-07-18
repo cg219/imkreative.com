@@ -1,7 +1,8 @@
 <template>
   <app>
     <div class="subscribe-page">
-      <h2>Subscribe for Updates</h2>
+      <h2>Subscribe to the Newsletter</h2>
+      <h3>Get announcements, exclusive deals and new print news first!</h3>
       <subscribe v-on:subscribed="onSubscribed"></subscribe>
     </div>
   </app>
@@ -37,6 +38,10 @@
     .subscribe-container {
       margin: 0 auto;
       width: 400px;
+
+      @media #{$sm-mobile} {
+        width: 100%;
+      }
     }
   }
 </style>

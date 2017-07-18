@@ -188,7 +188,10 @@ Router.post('/send-email', (req, res) => {
 
 Router.post('/save-email', (req, res) => {
   mailgun.lists('artbymente@mailer.imkreative.com').members().add({
-    members: [{address: req.body.email}],
+    members: [{
+      address: req.body.email,
+      name: req.body.fname
+    }],
     subscribed: true
   }, function(err, response){
     res.json({status: 200});

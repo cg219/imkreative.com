@@ -27,7 +27,7 @@
           </div>
         </div>
       </template>
-      <h2>Subscribe for updates</h2>
+      <h2>Subscribe to the Newsletter</h2>
       <subscribe />
     </div>
   </app>

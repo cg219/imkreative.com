@@ -17381,6 +17381,7 @@ module.exports = {
 //
 //
 //
+//
 
 const App = __webpack_require__(3);
 const Subscribe = __webpack_require__(13);
@@ -17413,6 +17414,15 @@ module.exports = {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 const App = __webpack_require__(3);
 const axios = __webpack_require__(5);
@@ -17424,26 +17434,57 @@ module.exports = {
   data() {
     return {
       email: '',
-      subscribedNotification: false
+      fname: '',
+      subscribedNotification: false,
+      emailErrorNotification: false,
+      nameErrorNotification: false
     };
   },
   methods: {
     validateForm(event) {
       event.preventDefault();
 
-      const valid = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(this.email);
+      const validEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(this.email);
+      const validName = this.fname != '';
 
-      if (valid) {
+      if (validEmail && validName) {
         this.saveEmail();
+      } else {
+        if (!validEmail) {
+          this.errorNotification();
+        }
+
+        if (!validName) {
+          this.errorNotification(1);
+        }
       }
     },
     saveEmail() {
       axios.post('api/save-email', {
-        email: this.email
+        email: this.email,
+        fname: this.fname
       }).then(response => {
         this.subscribeConfirmation();
         this.email = '';
+        this.fname = '';
       });
+    },
+    errorNotification(type) {
+      if (!type || type == 0) {
+        this.emailErrorNotification = true;
+
+        setTimeout(() => {
+          this.emailErrorNotification = false;
+        }, 2000);
+      }
+
+      if (type == 1) {
+        this.nameErrorNotification = true;
+
+        setTimeout(() => {
+          this.nameErrorNotification = false;
+        }, 2000);
+      }
     },
     subscribeConfirmation() {
       this.subscribedNotification = true;
@@ -18496,6 +18537,29 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.email = $event.target.value
       }
     }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "subscribe-container__input"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.fname),
+      expression: "fname"
+    }],
+    attrs: {
+      "type": "text",
+      "placeholder": "First Name (Required)",
+      "required": ""
+    },
+    domProps: {
+      "value": (_vm.fname)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.fname = $event.target.value
+      }
+    }
   })]), _vm._v(" "), _c('button', {
     attrs: {
       "type": "submit"
@@ -18508,7 +18572,17 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     class: {
       'show': _vm.subscribedNotification
     }
-  }, [_c('p', [_vm._v("Thank you for subscribing.")])])])
+  }, [_c('p', [_vm._v("Thank you for subscribing.")])]), _vm._v(" "), _c('div', {
+    staticClass: "email-error-notification",
+    class: {
+      'show': _vm.emailErrorNotification
+    }
+  }, [_c('p', [_vm._v("Email Address is invalid.")])]), _vm._v(" "), _c('div', {
+    staticClass: "name-error-notification",
+    class: {
+      'show': _vm.nameErrorNotification
+    }
+  }, [_c('p', [_vm._v("First Name is required.")])])])
 },staticRenderFns: []}
 
 /***/ }),
@@ -18837,7 +18911,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('app', [_c('div', {
     staticClass: "subscribe-page"
-  }, [_c('h2', [_vm._v("Subscribe for Updates")]), _vm._v(" "), _c('subscribe', {
+  }, [_c('h2', [_vm._v("Subscribe to the Newsletter")]), _vm._v(" "), _c('h3', [_vm._v("Get announcements, exclusive deals and new print news first!")]), _vm._v(" "), _c('subscribe', {
     on: {
       "subscribed": _vm.onSubscribed
     }
@@ -19156,7 +19230,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "href": ("/art/shop/product/" + (product.id))
       }
     })])])
-  }))])] : _vm._e(), _vm._v(" "), _c('h2', [_vm._v("Subscribe for updates")]), _vm._v(" "), _c('subscribe')], 2)])
+  }))])] : _vm._e(), _vm._v(" "), _c('h2', [_vm._v("Subscribe to the Newsletter")]), _vm._v(" "), _c('subscribe')], 2)])
 },staticRenderFns: []}
 
 /***/ }),
