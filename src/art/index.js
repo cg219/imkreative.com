@@ -1,5 +1,6 @@
 const Vue = require('vue').default;
 const styles = require('./art.scss');
+const polyfills = require('babel-polyfill');
 const Page = require('page');
 const Ting = require('./ting');
 const shopify = require('./../global/shopify');

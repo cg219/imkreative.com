@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const ExtractText = require('extract-text-webpack-plugin');
 const GlobalStyle = new ExtractText('./../css/[name].global.styles.css');
 const PageStyle = new ExtractText('./../css/[name].styles.css');
+const UglifyJS = require('uglifyjs-webpack-plugin');
 
 const CommonsPlugin = new webpack.optimize.CommonsChunkPlugin({
   name: 'common',
@@ -58,7 +59,8 @@ module.exports = {
   plugins: [
     GlobalStyle,
     PageStyle,
-    CommonsPlugin
+    CommonsPlugin,
+    new UglifyJS()
   ],
   externals: {
     async: 'commonjs async'

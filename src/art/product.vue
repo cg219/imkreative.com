@@ -9,6 +9,17 @@
         <h2 class="product-page__product-name notmobile">{{productTitle}}</h2>
         <p class="product-page__product-price">${{productPrice}}</p>
         <div class="product-page__cart-container">
+          <div class="product-page__variant-container" v-if="productObject.variants && productObject.variants.length > 1">
+            <div class="product-page__inner-variant-container" v-for="variant in productObject.options">
+              <label :for="`${variant.name}-select`">{{variant.name}}</label>
+              <select
+                :name="variant.name" 
+                :id="`${variant.name}-select`"
+                @change="onVariantChange">
+                <option :value="option" v-for="option in variant.values">{{option}}</option>
+              </select>
+            </div>
+          </div>
           <form action="">
             <div class="product-page__qty-container">
               <label for="productQuantity">Qty.</label>
@@ -20,8 +31,8 @@
           </form>
         </div>
         <p class="product-page__product-desc">{{productDesc}}</p>
-        <h3 class="product-page__shipping-info-heading">Shipping Info</h3>
-        <p class="product-page__shipping-info">
+        <h3 class="product-page__shipping-info-heading" v-if="productObject.attrs && productObject.attrs.product_type.toLowerCase() !== 'apparel'">Shipping Info</h3>
+        <p class="product-page__shipping-info" v-if="productObject.attrs && productObject.attrs.product_type.toLowerCase() !== 'apparel'">
           Please allow 7-10 days for item(s) to be shipped. Each item is hand packaged and printed for the best possible quality.
         </p>
         <share :desc="productTitle" :image="productImage" :link="address"></share>
@@ -55,6 +66,7 @@
         productImage: this.image,
         quantity: 1,
         selectedVariant: {},
+        productObject: {},
         addedAmount: 0,
         addedProductTitle: '',
         addedNotificationShowing: false,
@@ -81,13 +93,30 @@
       Ting.$on('PRODUCT_FETCHED', this.updateProduct);
     },
     methods: {
+      onVariantChange(event) {
+        let target = event.target;
+        let option = target.name;
+        let value = target.value;
+
+        this.productObject.options.find(element => {
+          return element.name == option;
+        }).selected = value;
+
+        this.updateProduct();
+      },
       updateProduct(product) {
-        this.productTitle = product.title;
-        this.productPrice = product.selectedVariant.price;
-        this.productDesc = product.description;
-        this.productImage = product.selectedVariantImage.variants[8].src;
-        this.selectedVariant = product.selectedVariant;
-        this.isAvailable = product.attrs.available;
+        if(product) {
+          this.productObject = product;
+        }
+
+        this.productTitle = this.productObject.title;
+        this.productPrice = this.productObject.selectedVariant.price;
+        this.productDesc = this.productObject.description;
+        this.productImage = this.productObject.selectedVariantImage.variants[8].src;
+        this.selectedVariant = this.productObject.selectedVariant;
+        this.isAvailable = this.productObject.attrs.available;
+
+        console.log(this.productObject);
       },
       addToCart(event) {
         event.preventDefault();
@@ -227,9 +256,31 @@
         align-items: flex-end;
       }
     }
+
     &__qty-container {
       display: flex;
       flex-direction: column;
+
+      label {
+        font-size: 12px;
+        margin-bottom: 5px;
+      }
+    }
+
+    &__variant-container {
+      display: flex;
+      flex-direction: row;
+      margin-bottom: 10px;
+    }
+
+    &__inner-variant-container {
+      display: flex;
+      flex-direction: column;
+      margin-right: 20px;
+
+      &:last-child {
+        margin-right: 0;
+      }
 
       label {
         font-size: 12px;
