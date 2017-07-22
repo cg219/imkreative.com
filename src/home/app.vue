@@ -18,21 +18,21 @@
       <ul>
         <li>
           <h2 class="subheader">Latest Post</h2>
-          <a :href="postInfo.url" target="_blank">
+          <a :href="postInfo.url">
             <div class="thumbnail" :style="postBackground"></div>
           </a>
           <h3 class="content-title">{{postInfo.title}}</h3>
         </li>
         <li>
           <h2 class="subheader">Featured Shop Item</h2>
-          <a :href="itemInfo.url" target="_blank">
+          <a :href="itemInfo.url">
             <div class="thumbnail" :style="itemBackground"></div>
           </a>
           <h3 class="content-title">{{itemInfo.title}}</h3>
         </li>
         <li>
           <h2 class="subheader">Latest Web App</h2>
-          <a :href="appInfo.url" target="_blank">
+          <a :href="appInfo.url">
             <div class="thumbnail" :style="appBackground"></div>
           </a>
           <h3 class="content-title">{{appInfo.title}}</h3>
