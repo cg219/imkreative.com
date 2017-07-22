@@ -4,9 +4,10 @@
 
     <nav class="social-nav">
       <ul>
-        <li><a href="">email</a></li>
-        <li><a href="">instagram</a></li>
-        <li><a href="">youtube</a></li>
+        <li><a href="/art/shop">shop</a></li>
+        <li><a href="/art/gallery">art gallery</a></li>
+        <li><a href="/portfolio">web portfolio</a></li>
+        <li><a href="/blog">blog</a></li>
       </ul>
     </nav>
   
