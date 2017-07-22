@@ -46,6 +46,7 @@ const app = new Vue({
     Ting.$on('FETCH_PRODUCT', app.getProduct);
     Ting.$on('FETCH_CART', app.getCart);
     Ting.$on('FETCH_FEATURED', app.getFeatured);
+    Ting.$on('UPDATE_META', app.updateMeta);
   },
   methods: {
     getProducts() {
@@ -71,6 +72,18 @@ const app = new Vue({
         .then((cart) => {
           Ting.$emit('CART_FETCHED', cart);
         })
+    },
+    updateMeta(props) {
+      let elements = {
+        title: document.head.querySelector('meta[property="og:title"]'),
+        url: document.head.querySelector('meta[property="og:url"]'),
+        image: document.head.querySelector('meta[property="og:image"]'),
+        type: document.head.querySelector('meta[property="og:type"]')
+      }
+
+      Object.keys(props).forEach(key => {
+        elements[key].setAttribute('content', props[key]);
+      })
     }
   },
   render(render) {

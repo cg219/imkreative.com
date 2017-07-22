@@ -108,7 +108,6 @@
         if(product) {
           this.productObject = product;
         }
-
         this.productTitle = this.productObject.title;
         this.productPrice = this.productObject.selectedVariant.price;
         this.productDesc = this.productObject.description;
@@ -116,7 +115,14 @@
         this.selectedVariant = this.productObject.selectedVariant;
         this.isAvailable = this.productObject.attrs.available;
 
-        console.log(this.productObject);
+        let newProps = {
+          title: `${this.productObject.title} - Art by Mente Gee`,
+          url: window.location.href,
+          type: 'website',
+          image: this.productObject.selectedVariantImage.variants[8].src
+        }
+
+        Ting.$emit('UPDATE_META', newProps);
       },
       addToCart(event) {
         event.preventDefault();
