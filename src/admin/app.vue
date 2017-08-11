@@ -6,22 +6,23 @@
     </header>
     <template v-if="loggedIn">
       <div class="container">
-        <h2>Email List</h2>
-        <ul>
-          <li v-for="email in emails">
-            <p>{{email}}</p>
-            <button>&times;</button>
-          </li>
-        </ul>
-        <button @click="extract">Extract</button>
+        <h2>Send Newsletter</h2>
+        <div class="form">
+          <div class="input"><input type="text" v-model="subject" placeholder="Subject"></div>
+          <div class="input"><input type="text" v-model="mailingList" placeholder="Mailing List"></div>
+          <div class="input"><input type="text" v-model="tags" placeholder="Tags (Seperated By Commas)"></div>
+          <div class="input"><input type="text" v-model="uuid" placeholder="UUID used for Newsletter URL (No Spaces)"></div>
+          <div class="input"><textarea type="text" v-model="newsletterHTML" placeholder="Newsletter HTML"></textarea></div>
+          <button @click="sendNewsletter">Send</button>
+        </div>
       </div>
     </template>
     <template v-else>
       <div class="container">
         <h2>Login</h2>
         <div class="form">
-          <div class="input"><input type="text" v-model="username"></div>
-          <div class="input"><input type="password" v-model="password"></div>
+          <div class="input"><input type="text" v-model="username" @keyup.enter="login"></div>
+          <div class="input"><input type="password" v-model="password" @keyup.enter="login"></div>
           <div class="button-container">
             <button @click="login">Login</button>
             <button @click="signup">Signup</button>
@@ -41,7 +42,20 @@
         loggedIn: this.$root.loggedInState,
         username: '',
         password: '',
-        emails: []
+        emails: [],
+        mailingList: 'test@mailer.imkreative.com',
+        newsletterHTML: '',
+        subject: '',
+        tags: '',
+        uuid: ''
+      }
+    },
+    computed: {
+      tagsAsArray() {
+        return this.tags.replace(/\s+/g, '').split(',');
+      },
+      strippedUUID() {
+        return this.uuid.replace(/\s+/g, '');
       }
     },
     methods: {
@@ -73,26 +87,36 @@
             window.location = '/';
           })
       },
-      extract() {
-        let emails = this.emails.map(email => {
-          return {'email': email};
-        })
-        let body = {
-          emails
+      validateNewsletter() {
+        if( this.mailingList.length < 10 ||
+            this.newsletterHTML.length < 10 ||
+            this.subject.length < 10 ||
+            this.uuid.length < 10 ) {
+          return false;
         }
 
-        axios.post('/extract', body)
-          .then(data => {
-            window.location = data.data;
+        return true;
+      },
+      sendNewsletter() {
+        if(this.validateNewsletter()) {
+          axios.post('/send-newsletter', {
+            email: this.mailingList,
+            html: this.newsletterHTML,
+            subject: this.subject,
+            tags: this.tagsAsArray,
+            uuid: this.strippedUUID
           })
+          .then(data => {
+            console.log(data);
+          })
+        }
+        else {
+          console.log('Fill Out Form Completely.')
+        }
       }
     },
     created() {
       if(this.loggedIn) {
-        axios.get('/emails')
-          .then(data => {
-            this.emails = data.data;
-          })
       }
     }
   }

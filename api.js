@@ -1,3 +1,4 @@
+const config = require('./config');
 const Router = require('express').Router();
 const request = require('request');
 const Redis = require('ioredis');
@@ -9,8 +10,8 @@ const SHOWS_CALL = `${MAIN_CALL}&include=1&content_type=show&order=-fields.date`
 const CATS_CALL = `${MAIN_CALL}&include=1&content_type=categories`;
 const EXPIRATION = 60 * 60;
 const mailgun = require('mailgun-js')({
-  apiKey: 'key-7oj5ibwgwlmq8h-rgz848ra14hu0u420',
-  domain: 'mailer.imkreative.com'
+  apiKey: config.MAILGUN_KEY,
+  domain: config.MAILGUN_DOMAIN
 })
 
 let redis = new Redis();
@@ -186,6 +187,11 @@ Router.post('/send-email', (req, res) => {
   })
 })
 
+Router.post('/mailgun-hook', (req, res) => {
+  console.log(req.body);
+  console.log("HIT");
+})
+
 Router.post('/save-email', (req, res) => {
   mailgun.lists('artbymente@mailer.imkreative.com').members().add({
     members: [{
@@ -196,15 +202,6 @@ Router.post('/save-email', (req, res) => {
   }, function(err, response){
     res.json({status: 200});
   })
-})
-
-Router.get('/get-email-list', (req, res) => {
-  redis.smembers('emails')
-    .then(result => {
-      res.json({
-        emails: result
-      });
-    })
 })
 
 module.exports = Router;

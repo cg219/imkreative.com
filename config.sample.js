@@ -1,0 +1,12 @@
+module.exports = {
+  SHOPIFY_TOKEN: '',
+  SHOPIFY_DOMAIN: '',
+  SHOPIFY_ID: '',
+  GOOGLE_ANAYLITICS_ID: '',
+  GOOGLE_ANAYLITICS_URL: '',
+  REDIS_SECRET: '',
+  ADMIN_USER: '',
+  PROD_IP: '',
+  MAILGUN_KEY: '',
+  MAILGUN_DOMAIN: ''
+}

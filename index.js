@@ -1,11 +1,14 @@
+const config = require('./config');
 const express = require('express');
 const ghost = require('ghost');
 const path = require('path');
 const PORT = process.env.PORT || process.argv[2] || 5000;
 const API = require('./api');
 const bodyParser = require('body-parser');
+const Redis = require('ioredis');
 
 let app = express();
+let redis = new Redis();
 let ghostOptions = {
   config: path.join(__dirname, './src/ghost/ghost.config.js')
 }
@@ -27,6 +30,18 @@ app.get('/art/*', (req, res) => {
   res.sendFile(path.resolve(__dirname, './views/art.html'));
 })
 
+app.get('/newsletter/:uuid', (req, res) => {
+  redis.hget('newsletters', req.params.uuid)
+    .then(result => {
+      if(result) {
+        res.send(result);
+      }
+      else {
+        res.status(404).send(`Sorry, we can't find what you are looking for`);
+      }
+    })
+})
+
 app.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname, './views/home.html'));
 })
@@ -40,7 +55,7 @@ ghost(ghostOptions)
 
 
 if(process.env.NODE_ENV == "production"){
-  app.listen(PORT, '216.70.82.169', () => {
+  app.listen(PORT, process.env.PROD_IP, () => {
     console.log('Connected on Production');
     console.log('PORT: ', PORT);
   })

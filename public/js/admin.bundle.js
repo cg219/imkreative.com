@@ -8138,6 +8138,7 @@ module.exports = Component.exports
 //
 //
 //
+//
 
 const axios = __webpack_require__(26);
 
@@ -8147,8 +8148,21 @@ module.exports = {
       loggedIn: this.$root.loggedInState,
       username: '',
       password: '',
-      emails: []
+      emails: [],
+      mailingList: 'test@mailer.imkreative.com',
+      newsletterHTML: '',
+      subject: '',
+      tags: '',
+      uuid: ''
     };
+  },
+  computed: {
+    tagsAsArray() {
+      return this.tags.replace(/\s+/g, '').split(',');
+    },
+    strippedUUID() {
+      return this.uuid.replace(/\s+/g, '');
+    }
   },
   methods: {
     signup() {
@@ -8176,25 +8190,31 @@ module.exports = {
         window.location = '/';
       });
     },
-    extract() {
-      let emails = this.emails.map(email => {
-        return { 'email': email };
-      });
-      let body = {
-        emails
-      };
+    validateNewsletter() {
+      if (this.mailingList.length < 10 || this.newsletterHTML.length < 10 || this.subject.length < 10 || this.uuid.length < 10) {
+        return false;
+      }
 
-      axios.post('/extract', body).then(data => {
-        window.location = data.data;
-      });
+      return true;
+    },
+    sendNewsletter() {
+      if (this.validateNewsletter()) {
+        axios.post('/send-newsletter', {
+          email: this.mailingList,
+          html: this.newsletterHTML,
+          subject: this.subject,
+          tags: this.tagsAsArray,
+          uuid: this.strippedUUID
+        }).then(data => {
+          console.log(data);
+        });
+      } else {
+        console.log('Fill Out Form Completely.');
+      }
     }
   },
   created() {
-    if (this.loggedIn) {
-      axios.get('/emails').then(data => {
-        this.emails = data.data;
-      });
-    }
+    if (this.loggedIn) {}
   }
 };
 
@@ -8734,13 +8754,123 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._v("Log Out")]) : _vm._e()]), _vm._v(" "), (_vm.loggedIn) ? [_c('div', {
     staticClass: "container"
-  }, [_c('h2', [_vm._v("Email List")]), _vm._v(" "), _c('ul', _vm._l((_vm.emails), function(email) {
-    return _c('li', [_c('p', [_vm._v(_vm._s(email))]), _vm._v(" "), _c('button', [_vm._v("×")])])
-  })), _vm._v(" "), _c('button', {
+  }, [_c('h2', [_vm._v("Send Newsletter")]), _vm._v(" "), _c('div', {
+    staticClass: "form"
+  }, [_c('div', {
+    staticClass: "input"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.subject),
+      expression: "subject"
+    }],
+    attrs: {
+      "type": "text",
+      "placeholder": "Subject"
+    },
+    domProps: {
+      "value": (_vm.subject)
+    },
     on: {
-      "click": _vm.extract
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.subject = $event.target.value
+      }
     }
-  }, [_vm._v("Extract")])])] : [_c('div', {
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "input"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.mailingList),
+      expression: "mailingList"
+    }],
+    attrs: {
+      "type": "text",
+      "placeholder": "Mailing List"
+    },
+    domProps: {
+      "value": (_vm.mailingList)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.mailingList = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "input"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.tags),
+      expression: "tags"
+    }],
+    attrs: {
+      "type": "text",
+      "placeholder": "Tags (Seperated By Commas)"
+    },
+    domProps: {
+      "value": (_vm.tags)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.tags = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "input"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.uuid),
+      expression: "uuid"
+    }],
+    attrs: {
+      "type": "text",
+      "placeholder": "UUID used for Newsletter URL (No Spaces)"
+    },
+    domProps: {
+      "value": (_vm.uuid)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.uuid = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "input"
+  }, [_c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.newsletterHTML),
+      expression: "newsletterHTML"
+    }],
+    attrs: {
+      "type": "text",
+      "placeholder": "Newsletter HTML"
+    },
+    domProps: {
+      "value": (_vm.newsletterHTML)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.newsletterHTML = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('button', {
+    on: {
+      "click": _vm.sendNewsletter
+    }
+  }, [_vm._v("Send")])])])] : [_c('div', {
     staticClass: "container"
   }, [_c('h2', [_vm._v("Login")]), _vm._v(" "), _c('div', {
     staticClass: "form"
@@ -8760,6 +8890,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": (_vm.username)
     },
     on: {
+      "keyup": function($event) {
+        if (!('button' in $event) && _vm._k($event.keyCode, "enter", 13)) { return null; }
+        _vm.login($event)
+      },
       "input": function($event) {
         if ($event.target.composing) { return; }
         _vm.username = $event.target.value
@@ -8781,6 +8915,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": (_vm.password)
     },
     on: {
+      "keyup": function($event) {
+        if (!('button' in $event) && _vm._k($event.keyCode, "enter", 13)) { return null; }
+        _vm.login($event)
+      },
       "input": function($event) {
         if ($event.target.composing) { return; }
         _vm.password = $event.target.value

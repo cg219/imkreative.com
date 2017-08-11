@@ -1,3 +1,4 @@
+const config = require('./config');
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
@@ -9,13 +10,17 @@ const RedisStore = require('connect-redis')(session);
 const Redis = require('ioredis');
 const axios = require('axios');
 const j2c = require('json2csv');
+const mailgun = require('mailgun-js')({
+  apiKey: config.MAILGUN_KEY,
+  domain: config.MAILGUN_DOMAIN
+})
 
 let app = express();
 let redis = new Redis();
 
 app.use(session({
   store: new RedisStore(),
-  secret: 'Yoanie has huge eyeballs.',
+  secret: process.env.REDIS_SECRET,
   resave: false,
   saveUninitialized: true
 }))
@@ -38,6 +43,49 @@ app.get('/', checkAdmin, (req, res) => {
 
 app.get('/login', (req, res) => {
   res.sendFile(path.resolve(__dirname, './views/admin.html'));
+})
+
+app.post('/send-newsletter', checkAdmin, (req, res) => {
+  const data = {
+    from: `Mente Gee<noreply@imkreative.com>`,
+    to: req.body.email,
+    subject: req.body.subject,
+    html: req.body.html,
+    "o:tracking": 'yes',
+    "o:tag": req.body.tags || null
+  }
+
+  let response = {
+    error: false,
+    errorMessage: null,
+    mailgun: null
+  }
+
+  redis.hget('newsletters', req.body.uuid)
+    .then(result => {
+      let promise = new Promise((resolve, reject) => {
+        if(result) {
+          response.errorMessage = 'UUID already exists';
+          reject();
+        }
+
+        resolve();
+      })
+      
+      return promise;
+    })
+    .then(result => {
+      redis.hset('newsletters', req.body.uuid, data.html);
+      return mailgun.messages().send(data);
+    })
+    .then(result => {
+      response.mailgun = result;
+      res.json(response);
+    })
+    .catch(error => {
+      response.error = true;
+      res.json(response);
+    })
 })
 
 app.get('/emails', checkAdmin, (req, res) => {
@@ -72,8 +120,8 @@ app.post('/signup', (req, res) => {
   redis.get(req.body.username)
     .then(result => {
       if(!result) {
-        if(req.body.username == 'kreativemente') {
-          redis.set('kreativemente', req.body.password);
+        if(req.body.username == config.ADMIN_USER) {
+          redis.set(config.ADMIN_USER, req.body.password);
           req.session.admin = true;
           return res.send('/');
         }
@@ -85,25 +133,8 @@ app.post('/signup', (req, res) => {
     })
 })
 
-app.post('/extract', checkAdmin, (req, res) => {
-  let opts = {
-    fields: ['email'],
-    flatten: true,
-    hasCSVColumnTitle: false,
-    data: req.body.emails
-  }
-  
-  j2c(opts, (err, csv) => {
-    let pathToCSV = `${__dirname}/public/emails.csv`;
-    let file = fs.writeFileSync(pathToCSV, csv);
-
-    res.send('/emails.csv');
-  });
-  
-})
-
 if(process.env.NODE_ENV == "production"){
-  app.listen(PORT, '216.70.82.169', () => {
+  app.listen(PORT, process.env.PROD_IP, () => {
     console.log('Connected on Production');
     console.log('PORT: ', PORT);
   })
