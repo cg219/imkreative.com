@@ -18,6 +18,8 @@ const mailgun = require('mailgun-js')({
 let app = express();
 let redis = new Redis();
 
+console.log(process.env);
+
 app.use(session({
   store: new RedisStore(),
   secret: process.env.REDIS_SECRET,
