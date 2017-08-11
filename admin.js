@@ -58,6 +58,7 @@ app.post('/send-newsletter', checkAdmin, (req, res) => {
   let response = {
     error: false,
     errorMessage: null,
+    errorCode: null,
     mailgun: null
   }
 
@@ -66,6 +67,7 @@ app.post('/send-newsletter', checkAdmin, (req, res) => {
       let promise = new Promise((resolve, reject) => {
         if(result) {
           response.errorMessage = 'UUID already exists';
+          response.errorCode = 1000;
           reject();
         }
 

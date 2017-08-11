@@ -30,6 +30,15 @@
         </div>
       </div>
     </template>
+    <div class="form-error-notification" :class="{'show': formErrorNotification}">
+      <p>ERROR: Fill Out Form Completely</p>
+    </div>
+    <div class="uuid-error-notification" :class="{'show': uuidErrorNotification}">
+      <p>That UUID already exists in the system</p>
+    </div>
+    <div class="success-notification" :class="{'show': successNotification}">
+      <p>Success Sent</p>
+    </div>
   </div>
 </template>
 
@@ -47,7 +56,10 @@
         newsletterHTML: '',
         subject: '',
         tags: '',
-        uuid: ''
+        uuid: '',
+        formErrorNotification: false,
+        successNotification: false,
+        uuidErrorNotification: false
       }
     },
     computed: {
@@ -107,11 +119,27 @@
             uuid: this.strippedUUID
           })
           .then(data => {
-            console.log(data);
+            if(data.data.error && data.data.errorCode == 1000) {
+              this.uuidErrorNotification = true;
+
+              setTimeout(() => {
+                this.uuidErrorNotification = false;
+              }, 2000);
+            }
+            else {
+              this.subject = '';
+              this.uuid = '';
+              this.tags = '';
+              this.newsletterHTML = '';
+            }
           })
         }
         else {
-          console.log('Fill Out Form Completely.')
+          this.formErrorNotification = true;
+
+          setTimeout(() => {
+            this.formErrorNotification = false;
+          }, 2000);
         }
       }
     },
@@ -222,6 +250,12 @@
         margin: 0;
       }
     }
+  }
+
+  .form-error-notification,
+  .success-notification,
+  .uuid-error-notification {
+    @extend %notification;
   }
   
 </style>

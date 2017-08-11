@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 307);
+/******/ 	return __webpack_require__(__webpack_require__.s = 308);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -8062,18 +8062,18 @@ module.exports = Cancel;
 
 /***/ }),
 
-/***/ 283:
+/***/ 284:
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(494)
+__webpack_require__(495)
 
 var Component = __webpack_require__(8)(
   /* script */
-  __webpack_require__(286),
+  __webpack_require__(287),
   /* template */
-  __webpack_require__(538),
+  __webpack_require__(539),
   /* scopeId */
   null,
   /* cssModules */
@@ -8101,9 +8101,18 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 286:
+/***/ 287:
 /***/ (function(module, exports, __webpack_require__) {
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -8153,7 +8162,10 @@ module.exports = {
       newsletterHTML: '',
       subject: '',
       tags: '',
-      uuid: ''
+      uuid: '',
+      formErrorNotification: false,
+      successNotification: false,
+      uuidErrorNotification: false
     };
   },
   computed: {
@@ -8206,10 +8218,25 @@ module.exports = {
           tags: this.tagsAsArray,
           uuid: this.strippedUUID
         }).then(data => {
-          console.log(data);
+          if (data.data.error && data.data.errorCode == 1000) {
+            this.uuidErrorNotification = true;
+
+            setTimeout(() => {
+              this.uuidErrorNotification = false;
+            }, 2000);
+          } else {
+            this.subject = '';
+            this.uuid = '';
+            this.tags = '';
+            this.newsletterHTML = '';
+          }
         });
       } else {
-        console.log('Fill Out Form Completely.');
+        this.formErrorNotification = true;
+
+        setTimeout(() => {
+          this.formErrorNotification = false;
+        }, 2000);
       }
     }
   },
@@ -8258,14 +8285,14 @@ module.exports = function createError(message, config, code, response) {
 
 /***/ }),
 
-/***/ 307:
+/***/ 308:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var Vue = __webpack_require__(25).default;
-var Admin = __webpack_require__(283);
+var Admin = __webpack_require__(284);
 var Routes = {
   '/': 'loggedin',
   '/login': 'loggedout'
@@ -8528,7 +8555,7 @@ module.exports = Axios;
 
 /***/ }),
 
-/***/ 494:
+/***/ 495:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
@@ -8742,7 +8769,7 @@ module.exports = function settle(resolve, reject, response) {
 
 /***/ }),
 
-/***/ 538:
+/***/ 539:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -8934,7 +8961,22 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.signup
     }
-  }, [_vm._v("Signup")])])])])]], 2)
+  }, [_vm._v("Signup")])])])])], _vm._v(" "), _c('div', {
+    staticClass: "form-error-notification",
+    class: {
+      'show': _vm.formErrorNotification
+    }
+  }, [_c('p', [_vm._v("ERROR: Fill Out Form Completely")])]), _vm._v(" "), _c('div', {
+    staticClass: "uuid-error-notification",
+    class: {
+      'show': _vm.uuidErrorNotification
+    }
+  }, [_c('p', [_vm._v("That UUID already exists in the system")])]), _vm._v(" "), _c('div', {
+    staticClass: "success-notification",
+    class: {
+      'show': _vm.successNotification
+    }
+  }, [_c('p', [_vm._v("Success Sent")])])], 2)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {

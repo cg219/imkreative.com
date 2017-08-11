@@ -1,4 +1,47 @@
 
+.form-error-notification,
+.success-notification,
+.uuid-error-notification {
+  bottom: 30px;
+  right: 30px;
+  cursor: pointer;
+  padding: 10px 20px;
+  background-color: #EFEFEF;
+  display: inline-block;
+  border-radius: 20px;
+  box-shadow: 0px 1px 3px rgba(18, 18, 18, 0.3);
+  position: fixed;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 60;
+  -webkit-transition: opacity .5s;
+  -moz-transition: opacity .5s;
+  -ms-transition: opacity .5s;
+  -o-transition: opacity .5s;
+  transition: opacity .5s;
+}
+.form-error-notification p,
+  .success-notification p,
+  .uuid-error-notification p {
+    margin: 0;
+    padding: 0;
+    font-weight: 400;
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+.show.form-error-notification,
+  .show.success-notification,
+  .show.uuid-error-notification {
+    opacity: 1;
+    pointer-events: auto;
+}
+.form-error-notification a,
+  .success-notification a,
+  .uuid-error-notification a {
+    display: block;
+    height: 100%;
+    width: 100%;
+}
 body {
   font-family: "Open Sans", sans-serif;
   color: #121212;
