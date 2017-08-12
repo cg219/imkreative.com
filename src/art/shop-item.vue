@@ -15,7 +15,7 @@
   const App = require('./app.vue');
 
   module.exports = {
-    props: ['title', 'price', 'image', 'productID', 'available'],
+    props: ['title', 'price', 'image', 'productID', 'available', 'type'],
     components: {
       App
     },
@@ -23,7 +23,8 @@
       return {
         styleObject: {
           backgroundImage: `url(${this.image})`
-        }
+        },
+        slug_type: this.type.toLowerCase()
       }
     }
   }
