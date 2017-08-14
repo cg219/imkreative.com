@@ -26,5 +26,5 @@ module.exports = {
       debug: false
     },
     migrationPath: './node_modules/ghost/core/server/data/migrations',
-    currentVersion: '1.5.2'
+    currentVersion: '1.0.2'
 }

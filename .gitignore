@@ -40,3 +40,4 @@ jspm_packages
 /content/
 
 config.js
+MigrationConfig.js
