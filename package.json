@@ -10,7 +10,7 @@
     "errorhandler": "^1.5.0",
     "express": "^4.15.2",
     "express-session": "^1.15.3",
-    "ghost": "0.11.9",
+    "ghost": "^1.0.2",
     "ioredis": "^2.5.0",
     "json2csv": "^3.7.3",
     "mailgun-js": "^0.11.2",
