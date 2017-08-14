@@ -50,6 +50,9 @@ ghost()
     app.use(ghostUtils.url.getSubdir(), ghostServer.rootApp);
     ghostServer.start(app);
   })
+  .catch(err => {
+    console.error(err);
+  })
 
 
 if(process.env.NODE_ENV == "production"){

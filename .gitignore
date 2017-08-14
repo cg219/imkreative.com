@@ -40,4 +40,5 @@ jspm_packages
 /content/
 
 config.js
+config.production.json
 MigrationConfig.js
