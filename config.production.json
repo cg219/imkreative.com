@@ -1,0 +1,31 @@
+{
+  "url": "http://imkreative.com/blog",
+  "adminUrl": "http://imkreative.com/blog/admin",
+  "mail": {
+    "transport": "SMTP",
+    "options": {
+      "service": "Mailgun",
+      "auth": {
+        "user": "postmaster@sandbox960a592ce0924897bcec3bdc1afbed40.mailgun.org",
+        "pass": "0czsewhexlj7"
+      }
+    }
+  },
+  "database": {
+    "client": "mysql",
+    "connection": {
+      "host": "127.0.0.1",
+      "user": "kreativemente",
+      "password": "",
+      "database": "ghostdev"
+    },
+    "debug": "true"
+  },
+  "server": {
+    "host": "216.70.82.169",
+    "port": "1235"
+  },
+  "paths": {
+    "contentPath": "./../../content/"
+  }
+}

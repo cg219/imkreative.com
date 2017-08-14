@@ -6,12 +6,10 @@ const PORT = process.env.PORT || process.argv[2] || 5000;
 const API = require('./api');
 const bodyParser = require('body-parser');
 const Redis = require('ioredis');
+const ghostUtils = require('./node_modules/ghost/core/server/utils');
 
 let app = express();
 let redis = new Redis();
-let ghostOptions = {
-  config: path.join(__dirname, './src/ghost/ghost.config.js')
-}
 
 app.use(express.static(__dirname + "/public"));
 app.use(express.static(__dirname + "/content"));
@@ -47,9 +45,9 @@ app.get('/', (req, res) => {
 })
 app.use('/api', API);
 
-ghost(ghostOptions)
+ghost()
   .then(ghostServer => {
-    app.use(ghostServer.config.paths.subdir, ghostServer.rootApp);
+    app.use(ghostUtils.url.getSubdir(), ghostServer.rootApp);
     ghostServer.start(app);
   })
 
