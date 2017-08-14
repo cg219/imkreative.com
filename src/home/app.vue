@@ -98,7 +98,7 @@
         .then(response => {
           this.postInfo = {
             url: `${blog_base_url}${response.data.posts[0].url}`,
-            image: response.data.posts[0].image,
+            image: response.data.posts[0].feature_image,
             title: response.data.posts[0].title
           }
         })
