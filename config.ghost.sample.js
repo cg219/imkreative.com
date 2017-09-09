@@ -23,10 +23,6 @@ module.exports = {
         },
         "debug": "true"
       },
-      "server": {
-        "host": props.server.host,
-        "port": props.server.port
-      },
       "paths": {
         "contentPath": props.content
       }
