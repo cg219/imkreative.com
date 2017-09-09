@@ -55,5 +55,8 @@
   "bugs": {
     "url": "https://github.com/cg219/imkreative.com/issues"
   },
+  "engines": {
+    "node": "6.11.0"
+  },
   "homepage": "https://github.com/cg219/imkreative.com#readme"
 }
