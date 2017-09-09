@@ -56,15 +56,15 @@ app.get('/', (req, res) => {
 })
 app.use('/api', API);
 
-ghost()
-  .then(ghostServer => {
-    console.log(ghostUtils);
-    app.use(ghostUtils.url.getSubdir(), ghostServer.rootApp);
-    ghostServer.start(app);
-  })
-  .catch(err => {
-    console.error(err);
-  })
+// ghost()
+//   .then(ghostServer => {
+//     console.log(ghostUtils);
+//     app.use(ghostUtils.url.getSubdir(), ghostServer.rootApp);
+//     ghostServer.start(app);
+//   })
+//   .catch(err => {
+//     console.error(err);
+//   })
 
 
 if(process.env.NODE_ENV == "production"){
