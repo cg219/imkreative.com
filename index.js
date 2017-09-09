@@ -13,15 +13,12 @@ let redis;
 
 if(process.env.NODE_ENV == "production") {
   redis = new Redis(process.env.REDISCLOUD_URL);
-  console.log(process.env.REDISCLOUD_URL);
-  console.log(redis);
 }
 else {
   redis = new Redis({
     hostname: config.REDIS_HOST,
     port: config.REDIS_PORT,
     password: config.REDIS_PASS
-
   });
 }
 

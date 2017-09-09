@@ -26,12 +26,13 @@ else {
     hostname: config.REDIS_HOST,
     port: config.REDIS_PORT,
     password: config.REDIS_PASS
-
   });
 }
 
 app.use(session({
-  store: new RedisStore(),
+  store: new RedisStore({
+    client: redis
+  }),
   secret: process.env.REDIS_SECRET,
   resave: false,
   saveUninitialized: true

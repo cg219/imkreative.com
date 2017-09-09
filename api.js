@@ -23,7 +23,6 @@ else {
     hostname: config.REDIS_HOST,
     port: config.REDIS_PORT,
     password: config.REDIS_PASS
-
   });
 }
 let extractAssetsForEntries = function(items, assets) {
