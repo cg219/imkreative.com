@@ -12,7 +12,9 @@ let app = express();
 let redis;
 
 if(process.env.NODE_ENV == "production") {
-  redis = new Redis(process.env.REDISCLOUD_URL)
+  redis = new Redis(process.env.REDISCLOUD_URL);
+  console.log(process.env.REDISCLOUD_URL);
+  console.log(redis);
 }
 else {
   redis = new Redis({
