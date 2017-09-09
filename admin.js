@@ -16,7 +16,7 @@ const mailgun = require('mailgun-js')({
 })
 
 let app = express();
-let redis = new Redis();
+let redis = new Redis(`redis://:${config.REDIS_PASS}@${config.REDIS_URI}`);
 
 app.use(session({
   store: new RedisStore(),

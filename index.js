@@ -9,7 +9,7 @@ const Redis = require('ioredis');
 const ghostUtils = require('./node_modules/ghost/core/server/utils');
 
 let app = express();
-let redis = new Redis();
+let redis = new Redis(`redis://:${config.REDIS_PASS}@${config.REDIS_URI}`);
 
 app.use(express.static(__dirname + "/public"));
 app.use(express.static(__dirname + "/content"));
