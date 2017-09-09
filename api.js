@@ -115,7 +115,9 @@ Router.get('/entries', (req, res) => {
       request.get(ENTRIES_CALL, (error, response, body) => {
         let parsedReturn = JSON.parse(body);
 
-        console.log(parsedReturn.includes);
+        console.log(response);
+        console.log(body);
+        console.log(parsedReturn);
         let formattedData = extractAssetsForEntries(parsedReturn.items, parsedReturn.includes.Asset);
 
         redis.set('entries', JSON.stringify(formattedData), 'ex', EXPIRATION);
