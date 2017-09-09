@@ -5,8 +5,12 @@ module.exports = {
   GOOGLE_ANAYLITICS_ID: `${process.env.GOOGLE_ANAYLITICS_ID}`,
   GOOGLE_ANAYLITICS_URL: `${process.env.GOOGLE_ANAYLITICS_URL}`,
   REDIS_SECRET: `${process.env.REDIS_SECRET}`,
+  REDIS_PASS: `${process.env.REDIS_PASS}`,
+  REDIS_URI: `${process.env.REDIS_URI}`,
   ADMIN_USER: `${process.env.ADMIN_USER}`,
   PROD_IP: `${process.env.PROD_IP}`,
   MAILGUN_KEY: `${process.env.MAILGUN_KEY}`,
-  MAILGUN_DOMAIN: `${process.env.MAILGUN_DOMAIN}`
+  MAILGUN_DOMAIN: `${process.env.MAILGUN_DOMAIN}`,
+  CONTENTFUL_SPACE_ID: `${process.env.CONTENTFUL_SPACE_ID}`,
+  CONTENTFUL_API_TOKEN: `${process.env.CONTENTFUL_API_TOKEN}`
 }

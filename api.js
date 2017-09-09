@@ -3,7 +3,7 @@ const Router = require('express').Router();
 const request = require('request');
 const Redis = require('ioredis');
 const Moment = require('moment');
-const MAIN_CALL = `https://cdn.contentful.com/spaces/${process.env.CONTENTFUL_SPACE_ID}/entries?access_token=${process.env.CONTENTFUL_API_TOKEN}`;
+const MAIN_CALL = `https://cdn.contentful.com/spaces/${config.CONTENTFUL_SPACE_ID}/entries?access_token=${config.CONTENTFUL_API_TOKEN}`;
 const ENTRIES_CALL = `${MAIN_CALL}&include=1&content_type=site&order=-fields.date`;
 const ART_CALL = `${MAIN_CALL}&include=1&content_type=art&order=-fields.date`;
 const SHOWS_CALL = `${MAIN_CALL}&include=1&content_type=show&order=-fields.date`;
@@ -14,7 +14,7 @@ const mailgun = require('mailgun-js')({
   domain: config.MAILGUN_DOMAIN
 })
 
-let redis = new Redis();
+let redis = new Redis(`redis://:${config.REDIS_PASS}@${config.REDIS_URI}`);
 let extractAssetsForEntries = function(items, assets) {
   // Return a formatted Data Object with necessary information.
   return items.map((item, index, array) => {
