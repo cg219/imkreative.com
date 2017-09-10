@@ -1,4 +1,4 @@
-require('./../node_modules/ghost/core/server/overrides');
+require('./node_modules/ghost/core/server/overrides');
 
 module.exports = {
   database: {

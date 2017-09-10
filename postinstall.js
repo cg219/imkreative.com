@@ -1,7 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 const ghostSample = require('./templates/config.ghost.sample');
-const migrator = require('./templates/migrator');
 
 //Create Frontend Config File
 
@@ -70,10 +69,11 @@ fs.writeFile('config.production.json', JSON.stringify(ghostSample.get(prodProps)
 
 //Create MigratorConfig.js
 
-fs.writeFile('MigratorConfig.js', migrator, err => {
-  if(err) {
-    console.error(err);
-  }
+let migratorRS = fs.createReadStream(path.join(__dirname, '/templates/', 'migrator.js'));
+let migratorWS = fs.createWriteStream(path.join(__dirname, 'MigratorConfig.js'));
 
-  console.log('MigratorConfig.js created');
-})
+migratorRS.on('error', error => console.error('Error Reading Sample Migrator File'));
+migratorWS.on('error', error => console.error('Error Writing Migrator File'));
+migratorWS.on('close', () => console.log('MigratorConfig.js created'));
+
+migratorRS.pipe(migratorWS);
