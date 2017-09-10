@@ -1,10 +1,11 @@
 const fs = require('fs');
 const path = require('path');
-const ghostSample = require('./config.ghost.sample');
+const ghostSample = require('./templates/config.ghost.sample');
+const migrator = require('./templates/migrator');
 
 //Create Frontend Config File
 
-let configRS = fs.createReadStream(path.join(__dirname, 'config.sample.js'));
+let configRS = fs.createReadStream(path.join(__dirname, '/templates/', 'config.sample.js'));
 let configWS = fs.createWriteStream(path.join(__dirname, 'config.js'));
 
 configRS.on('error', error => console.error('Error Reading Sample Config File'));
@@ -65,4 +66,14 @@ fs.writeFile('config.production.json', JSON.stringify(ghostSample.get(prodProps)
   }
 
   console.log('config.production.json created');
+})
+
+//Create MigratorConfig.js
+
+fs.writeFile('MigratorConfig.js', migrator, err => {
+  if(err) {
+    console.error(err);
+  }
+
+  console.log('MigratorConfig.js created');
 })
