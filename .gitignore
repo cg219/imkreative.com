@@ -41,4 +41,5 @@ jspm_packages
 
 config.js
 config.production.json
+config.development.json
 MigrationConfig.js
