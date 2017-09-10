@@ -64,5 +64,6 @@ fs.writeFile('config.production.json', JSON.stringify(ghostSample.get(prodProps)
     console.error(err);
   }
 
+  console.log(JSON.stringify(ghostSample.get(prodProps), null, 2))
   console.log('config.production.json created');
 })
