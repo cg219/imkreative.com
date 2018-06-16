@@ -13,18 +13,11 @@ const mailgun = require('mailgun-js')({
   apiKey: config.MAILGUN_KEY,
   domain: config.MAILGUN_DOMAIN
 })
-let redis;
-
-if(process.env.NODE_ENV == "production") {
-  redis = new Redis(process.env.REDISCLOUD_URL)
-}
-else {
-  redis = new Redis({
-    hostname: config.REDIS_HOST,
-    port: config.REDIS_PORT,
-    password: config.REDIS_PASS
-  });
-}
+let redis = new Redis({
+  hostname: config.REDIS_HOST,
+  port: config.REDIS_PORT,
+  password: config.REDIS_PASS
+});
 let extractAssetsForEntries = function(items, assets) {
   // Return a formatted Data Object with necessary information.
   return items.map((item, index, array) => {
@@ -109,7 +102,7 @@ Router.get('/entries', (req, res) => {
         console.log('From Redis');
         return res.json(JSON.parse(result));
       }
-      
+
       console.log('Calling Contentful');
 
       request.get(ENTRIES_CALL, (error, response, body) => {
@@ -130,7 +123,7 @@ Router.get('/arts', (req, res) => {
         console.log('From Redis');
         return res.json(JSON.parse(result));
       }
-      
+
       console.log('Calling Contentful');
 
       request.get(ART_CALL, (error, response, body) => {
@@ -151,7 +144,7 @@ Router.get('/shows', (req, res) => {
         console.log('From Redis');
         return res.json(JSON.parse(result));
       }
-      
+
       console.log('Calling Contentful');
 
       request.get(SHOWS_CALL, (error, response, body) => {
@@ -173,7 +166,7 @@ Router.get('/cats', (req, res) => {
         console.log('From Redis');
         return res.json(JSON.parse(result));
       }
-      
+
       console.log('Calling Contentful');
 
       request.get(CATS_CALL, (error, response, body) => {
