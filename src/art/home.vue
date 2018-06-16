@@ -14,7 +14,7 @@
             :showUpcoming="true" />
         </div>
       </template>
-      <template v-if="this.products.length > 0">
+      <!-- <template v-if="this.products.length > 0">
         <div class="shop-page">
           <h2>Featured Products</h2>
           <div class="shop-page__item-container">
@@ -26,7 +26,7 @@
             </div>
           </div>
         </div>
-      </template>
+      </template> -->
       <h2>Subscribe to the Newsletter</h2>
       <subscribe />
     </div>
@@ -53,8 +53,8 @@
       }
     },
     created() {
-      Ting.$emit('FETCH_FEATURED');
-      Ting.$on('FEATURED_FETCHED', this.updateProducts);
+      // Ting.$emit('FETCH_FEATURED');
+      // Ting.$on('FEATURED_FETCHED', this.updateProducts);
 
       axios.get('/api/shows')
         .then(data => {
@@ -73,7 +73,7 @@
 
 <style lang="scss">
   @import 'vars';
-  
+
   .homepage {
     text-align: center;
 
@@ -96,7 +96,7 @@
         height: 300px;
       }
     }
-    
+
     .subscribe-container {
       margin: 0 auto;
       width: 300px;
