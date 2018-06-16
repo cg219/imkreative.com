@@ -16,18 +16,11 @@ const mailgun = require('mailgun-js')({
 })
 
 let app = express();
-let redis;
-
-if(process.env.NODE_ENV == "production") {
-  redis = new Redis(process.env.REDISCLOUD_URL)
-}
-else {
-  redis = new Redis({
-    hostname: config.REDIS_HOST,
-    port: config.REDIS_PORT,
-    password: config.REDIS_PASS
-  });
-}
+let redis = new Redis({
+  hostname: config.REDIS_HOST,
+  port: config.REDIS_PORT,
+  password: config.REDIS_PASS
+});
 
 app.use(session({
   store: new RedisStore({
@@ -86,7 +79,7 @@ app.post('/send-newsletter', checkAdmin, (req, res) => {
 
         resolve();
       })
-      
+
       return promise;
     })
     .then(result => {
@@ -140,7 +133,7 @@ app.post('/signup', (req, res) => {
           req.session.admin = true;
           return res.send('/');
         }
-        
+
         return res.send('/login?fail=true');
       }
 
