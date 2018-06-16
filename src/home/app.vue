@@ -4,17 +4,17 @@
 
     <nav class="social-nav">
       <ul>
-        <li><a href="/art/shop">shop</a></li>
+        <!-- <li><a href="/art/shop">shop</a></li> -->
         <li><a href="/art/gallery">art gallery</a></li>
         <li><a href="/portfolio">web portfolio</a></li>
         <li><a href="/blog">blog</a></li>
       </ul>
     </nav>
-  
+
     <h2 class="subheader">The Gist</h2>
     <p>I create <a href="/art">art</a>. I develop <a href="/portfolio">web apps</a>. I <a href="/blog">blog</a> my thoughts.</p>
     <p class="subline">&mdash; Just an all around Kreative.</p>
-    
+
     <div class="network-content">
       <ul>
         <li>
@@ -24,13 +24,13 @@
           </a>
           <h3 class="content-title">{{postInfo.title}}</h3>
         </li>
-        <li>
+        <!-- <li>
           <h2 class="subheader">Featured Shop Item</h2>
           <a :href="itemInfo.url">
             <div class="thumbnail" :style="itemBackground"></div>
           </a>
           <h3 class="content-title">{{itemInfo.title}}</h3>
-        </li>
+        </li> -->
         <li>
           <h2 class="subheader">Latest Web App</h2>
           <a :href="appInfo.url">
@@ -40,7 +40,7 @@
         </li>
       </ul>
     </div>
-    
+
   </div>
 </template>
 
@@ -102,6 +102,7 @@
             title: response.data.posts[0].title
           }
         })
+        .catch(err => {})
 
       shopify.fetchQueryProducts({collection_id: '391278534'})
         .then(products => {
@@ -122,7 +123,7 @@
             image: webApp.thumbnail,
             title: webApp.name
           }
-        });
+        })
     }
   }
 </script>
@@ -150,8 +151,8 @@
       padding: 0;
 
       li {
-        width: 30%;
-        margin-right: 3.33%;
+        width: 50%;
+        margin-right: 5%;
       }
     }
 
@@ -195,7 +196,7 @@
       a {
         height: 250px;
       }
-      
+
     }
 
     @media #{$sm-mobile} {
@@ -211,7 +212,7 @@
       a {
         height: 250px;
       }
-      
+
     }
   }
 

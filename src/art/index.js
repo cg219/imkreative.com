@@ -13,7 +13,8 @@ const routes = {
   '/art/shop' : 'shop.vue',
   '/art/shop/product/:id' : 'product.vue',
   '/art/shop/cart' : 'cart.vue',
-  '/art/subscribe' : 'subscribe-now.vue'
+  '/art/subscribe' : 'subscribe-now.vue',
+  '/art/promo' : 'promo.vue'
 }
 
 const app = new Vue({

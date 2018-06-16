@@ -56,13 +56,10 @@
     methods: {
       filterCategory(slug) {
         this.shownCategory = slug;
-
-        console.log(this.shownCategory);
       },
       updateProducts(fetchedProducts) {
         this.products = fetchedProducts;
         this.updateSubNav();
-        console.log(this.subNav);
       },
       updateSubNav() {
         this.products.forEach(product => {

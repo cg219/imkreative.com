@@ -17,8 +17,7 @@
       :tech="entry.tech"
       :isActive="entry.isActive"
       :date="entry.date"
-      :thumbnail="entry.thumbnail"
-      :key="entry">
+      :thumbnail="entry.thumbnail">
     </portfolio-item>
   </div>
 </template>

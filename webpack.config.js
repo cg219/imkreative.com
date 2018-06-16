@@ -2,6 +2,16 @@ const path = require('path');
 const ExtractText = require('extract-text-webpack-plugin');
 const GlobalStyle = new ExtractText('./../css/[name].global.styles.css');
 const PageStyle = new ExtractText('./../css/[name].styles.css');
+const PreRenderSpaPlugin = require('prerender-spa-plugin');
+const HTMLPlugin = require('html-webpack-plugin');
+const PreRenderOpts = {
+  captureAfterTime: 15000
+}
+const ArtTemplate = new HTMLPlugin({
+  template: 'views/art-template.html',
+  filename: path.resolve(__dirname, 'public/static/index.html')
+})
+const PreRender = new PreRenderSpaPlugin(path.resolve(__dirname, 'public/static'), ['/art', '/art/contact', '/art/gallery'], PreRenderOpts);
 
 module.exports = {
   entry: {
@@ -51,7 +61,9 @@ module.exports = {
   },
   plugins: [
     GlobalStyle,
-    PageStyle
+    PageStyle,
+    // ArtTemplate,
+    // PreRender
   ],
   externals: {
     async: 'commonjs async'

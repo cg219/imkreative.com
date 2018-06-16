@@ -50,10 +50,10 @@
             url: "/art/gallery",
             title: "Gallery"
           },
-          {
-            url: "/art/shop",
-            title: "Shop"
-          },
+          // {
+          //   url: "/art/shop",
+          //   title: "Shop"
+          // },
           {
             url: "/art/shows",
             title: "Shows"
@@ -153,7 +153,7 @@
       margin-right: 0;
     }
   }
-  
+
   .header {
     display: flex;
     justify-content: space-between;
