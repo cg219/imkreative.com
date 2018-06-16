@@ -48,8 +48,8 @@
   const axios = require('axios');
   // const shopify = require('./../global/shopify');
 
-  // const secret = '23e118bf3fba';//'21b9406958b1';
-  const secret = '21b9406958b1';
+  const secret = '23e118bf3fba';
+  // const secret = '21b9406958b1';
   const client = 'ghost-frontend';
   const api_url = `/blog/ghost/api/v0.1/posts?client_id=${client}&client_secret=${secret}`;
   const product_base_url = '/art/shop/product';
