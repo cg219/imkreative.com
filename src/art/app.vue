@@ -8,13 +8,13 @@
         </header>
         <slot></slot>
       </div>
-      <div class="mobile-cart">
+      <!-- <div class="mobile-cart">
         <a href="/art/shop/cart">
           <div class="cart-icon">
             <p :class="{empty: itemCount == 0}">{{itemCount}}</p>
           </div>
         </a>
-      </div>
+      </div> -->
     </div>
     <footer>
       <ul>

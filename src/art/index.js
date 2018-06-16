@@ -10,9 +10,9 @@ const routes = {
   '/art/contact' : 'contact.vue',
   '/art/shows' : 'show.vue',
   '/art/gallery' : 'gallery.vue',
-  '/art/shop' : 'shop.vue',
-  '/art/shop/product/:id' : 'product.vue',
-  '/art/shop/cart' : 'cart.vue',
+  // '/art/shop' : 'shop.vue',
+  // '/art/shop/product/:id' : 'product.vue',
+  // '/art/shop/cart' : 'cart.vue',
   '/art/subscribe' : 'subscribe-now.vue',
   '/art/promo' : 'promo.vue'
 }
@@ -43,11 +43,11 @@ const app = new Vue({
     Page('*', () => app.currentPage = require('./404.vue'))
     Page();
 
-    Ting.$on('FETCH_PRODUCTS', app.getProducts);
-    Ting.$on('FETCH_PRODUCT', app.getProduct);
-    Ting.$on('FETCH_CART', app.getCart);
-    Ting.$on('FETCH_FEATURED', app.getFeatured);
-    Ting.$on('UPDATE_META', app.updateMeta);
+    // Ting.$on('FETCH_PRODUCTS', app.getProducts);
+    // Ting.$on('FETCH_PRODUCT', app.getProduct);
+    // Ting.$on('FETCH_CART', app.getCart);
+    // Ting.$on('FETCH_FEATURED', app.getFeatured);
+    // Ting.$on('UPDATE_META', app.updateMeta);
   },
   methods: {
     getProducts() {

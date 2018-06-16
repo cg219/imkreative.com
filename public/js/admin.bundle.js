@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 318);
+/******/ 	return __webpack_require__(__webpack_require__.s = 315);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -283,10 +283,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(27);
+    adapter = __webpack_require__(26);
   } else if (typeof process !== 'undefined') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(27);
+    adapter = __webpack_require__(26);
   }
   return adapter;
 }
@@ -367,7 +367,7 @@ module.exports = defaults;
 "use strict";
 
 
-var bind = __webpack_require__(31);
+var bind = __webpack_require__(30);
 
 /*global toString:true*/
 
@@ -669,30 +669,9 @@ module.exports = {
 /***/ }),
 
 /***/ 22:
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
+module.exports = __webpack_require__(48);
 
 /***/ }),
 
@@ -8129,18 +8108,11 @@ setTimeout(function () {
 
 /* harmony default export */ __webpack_exports__["default"] = (Vue$3);
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(12), __webpack_require__(22)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(12), __webpack_require__(34)))
 
 /***/ }),
 
 /***/ 26:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(48);
-
-/***/ }),
-
-/***/ 27:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8151,7 +8123,7 @@ var settle = __webpack_require__(54);
 var buildURL = __webpack_require__(57);
 var parseHeaders = __webpack_require__(63);
 var isURLSameOrigin = __webpack_require__(61);
-var createError = __webpack_require__(30);
+var createError = __webpack_require__(29);
 var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(56);
 
 module.exports = function xhrAdapter(config) {
@@ -8326,7 +8298,7 @@ module.exports = function xhrAdapter(config) {
 
 /***/ }),
 
-/***/ 28:
+/***/ 27:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8353,7 +8325,7 @@ module.exports = Cancel;
 
 /***/ }),
 
-/***/ 29:
+/***/ 28:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8366,18 +8338,18 @@ module.exports = function isCancel(value) {
 
 /***/ }),
 
-/***/ 294:
+/***/ 289:
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(527)
+__webpack_require__(526)
 
-var Component = __webpack_require__(8)(
+var Component = __webpack_require__(7)(
   /* script */
-  __webpack_require__(297),
+  __webpack_require__(292),
   /* template */
-  __webpack_require__(571),
+  __webpack_require__(576),
   /* scopeId */
   null,
   /* cssModules */
@@ -8405,7 +8377,32 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 297:
+/***/ 29:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var enhanceError = __webpack_require__(53);
+
+/**
+ * Create an Error with the specified message, config, error code, and response.
+ *
+ * @param {string} message The error message.
+ * @param {Object} config The config.
+ * @param {string} [code] The error code (for example, 'ECONNABORTED').
+ @ @param {Object} [response] The response.
+ * @returns {Error} The created error.
+ */
+module.exports = function createError(message, config, code, response) {
+  var error = new Error(message);
+  return enhanceError(error, config, code, response);
+};
+
+
+/***/ }),
+
+/***/ 292:
 /***/ (function(module, exports, __webpack_require__) {
 
 //
@@ -8453,7 +8450,7 @@ module.exports = Component.exports
 //
 //
 
-const axios = __webpack_require__(26);
+const axios = __webpack_require__(22);
 
 module.exports = {
   data() {
@@ -8557,31 +8554,6 @@ module.exports = {
 "use strict";
 
 
-var enhanceError = __webpack_require__(53);
-
-/**
- * Create an Error with the specified message, config, error code, and response.
- *
- * @param {string} message The error message.
- * @param {Object} config The config.
- * @param {string} [code] The error code (for example, 'ECONNABORTED').
- @ @param {Object} [response] The response.
- * @returns {Error} The created error.
- */
-module.exports = function createError(message, config, code, response) {
-  var error = new Error(message);
-  return enhanceError(error, config, code, response);
-};
-
-
-/***/ }),
-
-/***/ 31:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
 module.exports = function bind(fn, thisArg) {
   return function wrap() {
     var args = new Array(arguments.length);
@@ -8595,14 +8567,14 @@ module.exports = function bind(fn, thisArg) {
 
 /***/ }),
 
-/***/ 318:
+/***/ 315:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var Vue = __webpack_require__(25).default;
-var Admin = __webpack_require__(294);
+var Admin = __webpack_require__(289);
 var Routes = {
   '/': 'loggedin',
   '/login': 'loggedout'
@@ -8628,6 +8600,34 @@ new Vue({
 
 /***/ }),
 
+/***/ 34:
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+
 /***/ 48:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8635,7 +8635,7 @@ new Vue({
 
 
 var utils = __webpack_require__(2);
-var bind = __webpack_require__(31);
+var bind = __webpack_require__(30);
 var Axios = __webpack_require__(50);
 var defaults = __webpack_require__(15);
 
@@ -8670,9 +8670,9 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(28);
+axios.Cancel = __webpack_require__(27);
 axios.CancelToken = __webpack_require__(49);
-axios.isCancel = __webpack_require__(29);
+axios.isCancel = __webpack_require__(28);
 
 // Expose all/spread
 axios.all = function all(promises) {
@@ -8694,7 +8694,7 @@ module.exports.default = axios;
 "use strict";
 
 
-var Cancel = __webpack_require__(28);
+var Cancel = __webpack_require__(27);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -8914,7 +8914,7 @@ module.exports = InterceptorManager;
 
 var utils = __webpack_require__(2);
 var transformData = __webpack_require__(55);
-var isCancel = __webpack_require__(29);
+var isCancel = __webpack_require__(28);
 var defaults = __webpack_require__(15);
 
 /**
@@ -8993,7 +8993,7 @@ module.exports = function dispatchRequest(config) {
 
 /***/ }),
 
-/***/ 527:
+/***/ 526:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
@@ -9033,7 +9033,7 @@ module.exports = function enhanceError(error, config, code, response) {
 "use strict";
 
 
-var createError = __webpack_require__(30);
+var createError = __webpack_require__(29);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -9208,7 +9208,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 /***/ }),
 
-/***/ 571:
+/***/ 576:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -9706,7 +9706,7 @@ module.exports = function spread(callback) {
 
 /***/ }),
 
-/***/ 8:
+/***/ 7:
 /***/ (function(module, exports) {
 
 // this module is a runtime utility for cleaner component module output and will

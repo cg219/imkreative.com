@@ -46,9 +46,10 @@
 
 <script>
   const axios = require('axios');
-  const shopify = require('./../global/shopify');
+  // const shopify = require('./../global/shopify');
 
-  const secret = '23e118bf3fba';//'21b9406958b1';
+  // const secret = '23e118bf3fba';//'21b9406958b1';
+  const secret = '21b9406958b1';
   const client = 'ghost-frontend';
   const api_url = `/blog/ghost/api/v0.1/posts?client_id=${client}&client_secret=${secret}`;
   const product_base_url = '/art/shop/product';
@@ -104,15 +105,15 @@
         })
         .catch(err => {})
 
-      shopify.fetchQueryProducts({collection_id: '391278534'})
-        .then(products => {
-          this.itemInfo = {
-            url: `${product_base_url}/${products[0].id}`,
-            image: products[0].selectedVariantImage.variants[6].src,
-            id: products[0].id,
-            title: products[0].title
-          }
-        })
+      // shopify.fetchQueryProducts({collection_id: '391278534'})
+      //   .then(products => {
+      //     this.itemInfo = {
+      //       url: `${product_base_url}/${products[0].id}`,
+      //       image: products[0].selectedVariantImage.variants[6].src,
+      //       id: products[0].id,
+      //       title: products[0].title
+      //     }
+      //   })
 
       axios.get('/api/entries')
         .then(response => {
