@@ -13,7 +13,12 @@ const mailgun = require('mailgun-js')({
   apiKey: config.MAILGUN_KEY,
   domain: config.MAILGUN_DOMAIN
 })
-let redis = new Redis();
+
+let redis = new Redis({
+  hostname: config.REDIS_HOST,
+  port: config.REDIS_PORT,
+  password: config.REDIS_PASS
+});
 let extractAssetsForEntries = function(items, assets) {
   // Return a formatted Data Object with necessary information.
   return items.map((item, index, array) => {
