@@ -14,6 +14,7 @@ const mailgun = require('mailgun-js')({
   domain: config.MAILGUN_DOMAIN
 })
 
+console.log(config);
 let redis = new Redis({
   hostname: config.REDIS_HOST,
   port: config.REDIS_PORT,
